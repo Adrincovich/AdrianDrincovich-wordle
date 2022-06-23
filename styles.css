@@ -1,0 +1,15 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+
+form {
+    width: auto;
+}
+
+input {
+    width: 50px;
+    height: 50px;
+    margin: 8px 0px;
+    border: 2px solid black
+}
