@@ -78,6 +78,11 @@ pintarTablero();
 
 */
 
+// funcion para salgo de input
+
+
+
+
 //matriz colores del tablero
 
 var colorTablero = [
@@ -122,7 +127,7 @@ function pintarTablero(){
 
 
 var respuestas = [
-    [],//
+    [],
     [],
     [],
     [],
@@ -142,31 +147,56 @@ function inicio () {
     }
 }
 
+
 function guardarRespuesta(indice){
-    //console.log(indice)
+   // console.log(indice)
     for (let iCol = 0; iCol < 5; iCol++){
         let input = document.getElementById(`f${indice}c${iCol}`).value;
         respuestas[indice].push(input);
     }
     revisarResultado(respuestas[indice], indice);
+    console.log(respuestas[indice])
 }
 
 
 
-var palabraGanadora = "birra"
+var palabraGanadora = "salud"
 var arrayPalabraGanadora = palabraGanadora.split("")
 
 
 
 function revisarResultado(respuesta, indice){
     respuesta.forEach(function(elemento, index){
-        if(elemento === arrayPalabraGanadora[index] ){
+        if(elemento === arrayPalabraGanadora[index]){
             colorTablero[indice][index] = colores.VERDE;
+        }
+        else if(arrayPalabraGanadora.includes(elemento)){
+            colorTablero[indice][index] = colores.AMARILLO;
+        }
+        else if(!arrayPalabraGanadora.includes(elemento)){
+            colorTablero[indice][index] = colores.GRIS;
         }
     })
     pintarTablero();
 }
 
+
+function tabular(obj, tam) {
+    let frm = obj.form;
+    let largo = obj.value.length;
+        if (largo == tam) {
+            for(i=0;i<frm.elements.length;i++) {
+                if(frm.elements[i]==obj) {
+                if (i==frm.elements.length-1) { i=-1; }
+            break;
+        }
+    }
+
+    frm.elements[i+1].focus();
+    return false;
+
+    }
+    }
 
 
 window.onload = function(){
