@@ -158,9 +158,16 @@ function guardarRespuesta(indice){
     console.log(respuestas[indice])
 }
 
+// Funcion para generar palabras randon
 
+const palabrasDisponibles = ['mates', 'pasto','toser']
 
-var palabraGanadora = "salud"
+function elegirPalabraAlAzar(palabrasDisponibles) {
+    return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
+}
+
+var palabraGanadora = elegirPalabraAlAzar(palabrasDisponibles)
+
 var arrayPalabraGanadora = palabraGanadora.split("")
 
 
@@ -180,6 +187,8 @@ function revisarResultado(respuesta, indice){
     pintarTablero();
 }
 
+
+// salto de input
 
 function tabular(obj, tam) {
     let frm = obj.form;
