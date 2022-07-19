@@ -78,10 +78,6 @@ pintarTablero();
 
 */
 
-// funcion para salgo de input
-
-
-
 
 //matriz colores del tablero
 
@@ -140,7 +136,6 @@ function inicio () {
         let fieldset = document.getElementById(`fila${indice}`);
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
-                //console.log('indice',indice)
                 guardarRespuesta(indice)
             }
         }
@@ -149,7 +144,6 @@ function inicio () {
 
 
 function guardarRespuesta(indice){
-   // console.log(indice)
     for (let iCol = 0; iCol < 5; iCol++){
         let input = document.getElementById(`f${indice}c${iCol}`).value;
         respuestas[indice].push(input);

@@ -7,6 +7,7 @@
 header {
     height: auto;
     min-height: 130px;
+    padding-top: 20px;
     font-size: 50px;
     color: rgb(231, 222, 222);
 }
@@ -17,12 +18,46 @@ header {
     padding-bottom: 20px;
 }
 
+.button-nav {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.button-nav :link {
+    background-color: #f1f1f1;
+    text-decoration: none;
+}
+
+.button-nav :visited {
+    text-decoration: none;
+    background-color: #f1f1f1;
+}
+
+.button-nav:hover {
+    text-decoration: none;
+    color: rgb(160, 29, 29);
+}
+
+.button-nav :visited:hover {
+    background-color: #f1f1f1;
+    text-decoration: none;
+    color: rgb(160, 29, 29);
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 main {
     display: flex;
     justify-content: center;
 }
-
-
 
 fieldset  {
     display: flex;
@@ -31,7 +66,7 @@ fieldset  {
 
 }
 
-input {
+.input-wordle {
     background-color: #f1f1f1;
     width: 60px;
     margin: 5px;
@@ -47,9 +82,9 @@ input {
 
 }
 
-input:focus{
+.input-wordle:focus{
     outline: none;
-    border: 2px solid rgba(160, 29, 29, 0.75);
+    border: 2px solid rgb(160, 29, 29);
     box-shadow: 0px 0px 0px;
 
 }
