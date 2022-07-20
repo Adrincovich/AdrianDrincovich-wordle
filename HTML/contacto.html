@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../CSS/reset.css">
     <link rel="stylesheet" href="../CSS/styles.css">
     <link rel="stylesheet" href="../CSS/form.css">
+    <script src="../JS/form.js"></script>
 </head>
 <body>
     <header>
@@ -22,17 +23,17 @@
         <form id="formulario-contacto">
             <fieldset class="fieldset-contacto">
                 <label for="name">Nombre</label>
-                <input id="name" class="formulario-clase" type="text" name="name">
+                <input id="name" class="formulario-clase" type="text" name="name" required>
                 <p></p>
             </fieldset>
             <fieldset class="fieldset-contacto">
                 <label for="email">Email</label>
-                <input id="email" class="formulario-clase" type="text" name="email">
+                <input id="email" class="formulario-clase" type="email" name="email" required>
                 <p></p>
             </fieldset>
             <fieldset class="fieldset-contacto">
                 <label for="comentario">Comentario</label>
-                <textarea class="formulario-clase" name="comentario" rows="5" cols="50"></textarea>
+                <textarea id="comentario" class="formulario-clase" name="comentario" rows="5" cols="50" minlength="5" required></textarea>
                 <p></p>
             </fieldset>
             <fieldset class="fieldset-contacto">
