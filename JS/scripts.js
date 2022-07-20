@@ -207,7 +207,27 @@ function tabular(obj, tam) {
 
 
 window.onload = function(){
-    //console.log(palabraGanadora.split(""))
+    //Funcion para ingresar nombre
+    const usuario = document.getElementById("nueva-partida");
+
+    function user() {
+        let player = {
+          name: null
+        }
+        player.name = prompt("Ingrese su nombre para jugar:");
+        if (!player.name) {
+            alert("Debe ingresar un nombre para jugar.");
+            return;
+        } else {
+            alert("Muchas gracias, el juego ha comenzado " + player.name + "!");
+            runGame();
+        }
+    }
+
+    usuario.addEventListener("click", function(){
+        user();
+    })
+
     inicio()
     pintarTablero()
 }

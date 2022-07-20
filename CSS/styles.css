@@ -8,12 +8,12 @@ header {
     height: auto;
     min-height: 130px;
     padding-top: 20px;
-    font-size: 50px;
+    font-size: 45px;
     color: rgb(231, 222, 222);
 }
 
 .header {
-    color: white;
+    color: #f1f1f1;
     text-align: center;
     padding-bottom: 20px;
 }
@@ -59,19 +59,18 @@ main {
     justify-content: center;
 }
 
-fieldset  {
+.fieldset-wordle  {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-
 }
 
 .input-wordle {
     background-color: #f1f1f1;
-    width: 60px;
+    width: 50px;
     margin: 5px;
     text-align: center;
-    line-height: 55px;
+    line-height: 40px;
     font-size: 40px;
     border: 2px solid rgba(0, 0, 0, 0.377);
     border-radius: 10px;
