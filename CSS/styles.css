@@ -66,7 +66,7 @@ header {
 }
 
 #time {
-    color: rgb(160, 29, 29);
+    color: rgb(21, 211, 21);
 }
 
 main {
@@ -87,10 +87,9 @@ main {
     text-align: center;
     line-height: 40px;
     font-size: 40px;
-    border: 2px solid rgba(0, 0, 0, 0.377);
+    border: 2px solid rgba(0, 0, 0, 0.514);
     border-radius: 10px;
     box-shadow: 2px 2px 10px #353434;
-    text-shadow: 0 0 0 gray;
     text-transform: uppercase;
     caret-color: transparent;
 }
@@ -103,8 +102,8 @@ main {
 }
 
 input:disabled {
-    background:#353434a8;
-    border: 2px solid rgb(88, 88, 88);
+    background:#f1f1f1;
+    border: 2px solid rgba(255, 255, 255, 0.900);
   }
 
 .verde {

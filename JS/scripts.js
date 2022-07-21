@@ -49,26 +49,43 @@ var respuestas = [
     [],
 ]
 
+var estadoGanador = false
+
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
                 guardarRespuesta(indice);
-                if (indice == 0){
+
+                let respuestaUsuario = respuestas[indice];
+                let respuestaUsuarioString = respuestaUsuario.join('');
+
+                if (respuestaUsuarioString == palabraGanadora){
+                    estadoGanador = true
+                    alert("Ganaste");
+                    showBtn();
+                    location.reload();
+                }
+
+                if (indice == 0 && respuestaUsuarioString != palabraGanadora){
                     document.getElementById(`fila1`).disabled=false;
                 }
-                if (indice == 1){
+                if (indice == 1 && respuestaUsuarioString != palabraGanadora){
                     document.getElementById(`fila2`).disabled=false;
                 }
-                if (indice == 2){
+                if (indice == 2 && respuestaUsuarioString != palabraGanadora){
                     document.getElementById(`fila3`).disabled=false;
                 }
-                if (indice == 3){
+                if (indice == 3 && respuestaUsuarioString != palabraGanadora){
                     document.getElementById(`fila4`).disabled=false;
                 }
-                if (indice == 4){
+                if (indice == 4 && respuestaUsuarioString != palabraGanadora){
                     document.getElementById(`fila5`).disabled=false;
+                }
+                if (indice == 5  && respuestaUsuarioString != palabraGanadora){
+                    alert(`Game OVER! la palabra es: "${palabraGanadora}"`);
+                    location.reload();
                 }
             }
         }
@@ -81,26 +98,7 @@ function guardarRespuesta(indice){
         respuestas[indice].push(input);
     }
     revisarResultado(respuestas[indice], indice);
-    console.log(respuestas[indice])
 }
-
-// Funcion para generar palabras randon
-
-const palabrasDisponibles = ['mates', 'pasto'/*,'toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
-                            'aguja', 'audio', 'cueva', 'domar', 'grave', 'fumar', 'freir', 'furia', 'ganar', 'gasto',
-                            'perro', 'pista', 'arroz', 'arena', 'mirar', 'salto', 'corte', 'mareo', 'multa', 'micro',
-                            'risas', 'nubes', 'notar', 'plomo', 'pulpa', 'pesar', 'parar', 'porra', 'techo', 'titan',
-                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado'*/]
-
-function elegirPalabraAlAzar(palabrasDisponibles) {
-    return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
-}
-
-var palabraGanadora = elegirPalabraAlAzar(palabrasDisponibles)
-
-
-var arrayPalabraGanadora = palabraGanadora.split("")
-
 
 function revisarResultado(respuesta, indice){
     respuesta.forEach(function(elemento, index){
@@ -117,6 +115,21 @@ function revisarResultado(respuesta, indice){
     pintarTablero();
 }
 
+// Funcion para generar palabras randon
+
+const palabrasDisponibles = ['mates'/*, 'pasto','toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
+                            'aguja', 'audio', 'cueva', 'domar', 'grave', 'fumar', 'freir', 'furia', 'ganar', 'gasto',
+                            'perro', 'pista', 'arroz', 'arena', 'mirar', 'salto', 'corte', 'mareo', 'multa', 'micro',
+                            'risas', 'nubes', 'notar', 'plomo', 'pulpa', 'pesar', 'parar', 'porra', 'techo', 'titan',
+                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado'*/]
+
+function elegirPalabraAlAzar(palabrasDisponibles) {
+    return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
+}
+
+var palabraGanadora = elegirPalabraAlAzar(palabrasDisponibles);
+
+var arrayPalabraGanadora = palabraGanadora.split("")
 
 // salto de input
 
@@ -130,15 +143,19 @@ function tabular(obj, tam) {
             break;
         }
     }
-
     frm.elements[i+1].focus();
     return false;
-
     }
-    }
+}
 
 
-    window.onload = function(){
+function showBtn() {
+    document.getElementById("nueva-partida").style.display="inline-block";
+    document.getElementById("timer").style.display="none";
+    document.getElementById("time").style.display="none";
+}
+
+window.onload = function(){
 
     //Funcion para ingresar nombre
 
@@ -171,8 +188,8 @@ function tabular(obj, tam) {
         document.getElementById("nueva-partida").style.display="none";
         document.getElementById("timer").style.display="block";
         document.getElementById("time").style.display="inline";
-
         }
+
 
        function timer() {
         var fiveMinutes = 60 * 5,
@@ -190,6 +207,18 @@ function tabular(obj, tam) {
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
             display.textContent = minutes + ":" + seconds;
+
+            if (estadoGanador){
+                timer = duration;
+            }
+
+            if (timer < 60 * 3){
+                document.getElementById("time").style.color="rgb(226, 226, 85)";
+            }
+
+            if (timer < 60){
+                document.getElementById("time").style.color="rgb(160, 29, 29)";
+            }
 
             if (--timer < 0) {
                 timer = duration;
