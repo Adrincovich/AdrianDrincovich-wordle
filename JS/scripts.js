@@ -1,12 +1,3 @@
-
-/*
-vamos a crear 2 funciones cuando se abre el navegador
-inicio();
-pintarTablero();
-
-*/
-
-
 //matriz colores del tablero
 
 var colorTablero = [
@@ -49,7 +40,6 @@ function pintarTablero(){
     }
 }
 
-
 var respuestas = [
     [],
     [],
@@ -64,12 +54,26 @@ function inicio () {
         let fieldset = document.getElementById(`fila${indice}`);
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
-                guardarRespuesta(indice)
+                guardarRespuesta(indice);
+                if (indice == 0){
+                    document.getElementById(`fila1`).disabled=false;
+                }
+                if (indice == 1){
+                    document.getElementById(`fila2`).disabled=false;
+                }
+                if (indice == 2){
+                    document.getElementById(`fila3`).disabled=false;
+                }
+                if (indice == 3){
+                    document.getElementById(`fila4`).disabled=false;
+                }
+                if (indice == 4){
+                    document.getElementById(`fila5`).disabled=false;
+                }
             }
         }
     }
 }
-
 
 function guardarRespuesta(indice){
     for (let iCol = 0; iCol < 5; iCol++){
@@ -82,11 +86,11 @@ function guardarRespuesta(indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['mates', 'pasto','toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
+const palabrasDisponibles = ['mates', 'pasto'/*,'toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
                             'aguja', 'audio', 'cueva', 'domar', 'grave', 'fumar', 'freir', 'furia', 'ganar', 'gasto',
                             'perro', 'pista', 'arroz', 'arena', 'mirar', 'salto', 'corte', 'mareo', 'multa', 'micro',
                             'risas', 'nubes', 'notar', 'plomo', 'pulpa', 'pesar', 'parar', 'porra', 'techo', 'titan',
-                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado']
+                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado'*/]
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -154,6 +158,7 @@ function tabular(obj, tam) {
             pintarTablero();
             timer();
             hideBtn();
+            document.getElementById("fila0").disabled=false;
         }
     }
 
@@ -188,6 +193,9 @@ function tabular(obj, tam) {
 
             if (--timer < 0) {
                 timer = duration;
+                clearTimeout(timer);
+                alert(`Game OVER! la palabra es: "${palabraGanadora}"`);
+                location.reload();
             }
         }, 1000);
     }

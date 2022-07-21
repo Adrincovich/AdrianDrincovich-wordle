@@ -103,7 +103,7 @@ main {
 }
 
 input:disabled {
-    background:#353434;
+    background:#353434a8;
     border: 2px solid rgb(88, 88, 88);
   }
 
