@@ -51,7 +51,7 @@ header {
 #buttons {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 #timer, #time {
@@ -61,7 +61,7 @@ header {
     text-align: center;
     min-height: 30px;
     padding-bottom: 20px;
-    font-size: 50px;
+    font-size: 30px;
     color: #f1f1f1
 }
 

@@ -6,7 +6,8 @@ window.onload = function() {
 
     form.addEventListener("submit", function(e){
         e.preventDefault();
-        window.open('mailto:test@example.com?subject=subject&body=body');
+        window.open(`mailto:adrian.drincovich@gmail.com?subject=Consulta de ${name.value}&body=${text.value}`);
+        form.reset();
     })
 
 }
