@@ -154,8 +154,7 @@ function tabular(obj, tam) {
 
 
 function showBtn() {
-    document.getElementById("nueva-partida").style.display="inline-block";
-    document.getElementById("cargar-partida").style.display="inline-block";
+    document.getElementById("volver-a-jugar-partida").style.display="inline-block";
     document.getElementById("guardar-partida").style.display="none";
     // document.getElementById("timer").style.display="none";
     // document.getElementById("time").style.display="none";
@@ -165,7 +164,8 @@ window.onload = function(){
 
     //Funcion para ingresar nombre
 
-    const usuario = document.getElementById("nueva-partida");
+    const nuevaPartida = document.getElementById("nueva-partida");
+    const jugarPartida = document.getElementById("volver-a-jugar-partida");
 
     function user() {
         let player = {
@@ -186,8 +186,12 @@ window.onload = function(){
         }
     }
 
-    usuario.addEventListener("click", function(){
+    nuevaPartida.addEventListener("click", function(){
         user();
+    })
+
+    jugarPartida.addEventListener("click", function(){
+        location.reload();
     })
 
     // Nueva partida, esconder botones
@@ -229,9 +233,9 @@ window.onload = function(){
 
             display.textContent = minutes + ":" + seconds;
 
-            // if (estadoGanador){
-            //     clearInterval(reloj);
-            // }
+            if (estadoGanador){
+                clearInterval(reloj);
+            }
 
             if (timer < 60 * 3){
                 document.getElementById("time").style.color="rgb(226, 226, 85)";

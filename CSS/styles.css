@@ -110,6 +110,10 @@ input:disabled {
     display:none;
 }
 
+#volver-a-jugar-partida {
+    display: none;
+}
+
 .verde {
     background-color: rgb(21, 211, 21);
 }
