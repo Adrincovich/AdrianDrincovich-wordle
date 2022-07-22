@@ -106,6 +106,10 @@ input:disabled {
     border: 2px solid rgba(255, 255, 255, 0.900);
   }
 
+#guardar-partida{
+    display:none;
+}
+
 .verde {
     background-color: rgb(21, 211, 21);
 }

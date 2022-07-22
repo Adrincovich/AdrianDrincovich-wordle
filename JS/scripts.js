@@ -1,3 +1,6 @@
+
+
+
 //matriz colores del tablero
 
 var colorTablero = [
@@ -63,9 +66,9 @@ function inicio () {
 
                 if (respuestaUsuarioString == palabraGanadora){
                     estadoGanador = true
-                    alert("Ganaste");
                     showBtn();
-                    location.reload();
+                    alert("Ganaste");
+                    //location.reload();
                 }
 
                 if (indice == 0 && respuestaUsuarioString != palabraGanadora){
@@ -149,10 +152,13 @@ function tabular(obj, tam) {
 }
 
 
+
 function showBtn() {
     document.getElementById("nueva-partida").style.display="inline-block";
-    document.getElementById("timer").style.display="none";
-    document.getElementById("time").style.display="none";
+    document.getElementById("cargar-partida").style.display="inline-block";
+    document.getElementById("guardar-partida").style.display="none";
+    // document.getElementById("timer").style.display="none";
+    // document.getElementById("time").style.display="none";
 }
 
 window.onload = function(){
@@ -171,6 +177,7 @@ window.onload = function(){
             return;
         } else {
             alert("Muchas gracias, el juego ha comenzado " + player.name + "!");
+            estadoGanador = false;
             inicio();
             pintarTablero();
             timer();
@@ -186,20 +193,34 @@ window.onload = function(){
     // Nueva partida, esconder botones
     function hideBtn() {
         document.getElementById("nueva-partida").style.display="none";
+        document.getElementById("cargar-partida").style.display="none";
+        document.getElementById("guardar-partida").style.display="inline-block";
         document.getElementById("timer").style.display="block";
         document.getElementById("time").style.display="inline";
         }
 
 
-       function timer() {
+    function timer() {
         var fiveMinutes = 60 * 5,
-            display = document.querySelector('#time');
+        display = document.querySelector('#time');
         startTimer(fiveMinutes, display);
-       }
+    }
 
-       function startTimer(duration, display) {
+
+    // function timer(startStop) {
+    //     if (startStop){
+    //         var fiveMinutes = 60 * 5,
+    //         display = document.querySelector('#time');
+    //         startTimer(fiveMinutes, display);
+    //         }
+    //     else {
+    //         clearInterval(reloj);
+    //     }
+    // }
+
+    function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
-        setInterval(function () {
+        var reloj = setInterval(function () {
             minutes = parseInt(timer / 60, 10)
             seconds = parseInt(timer % 60, 10);
 
@@ -208,9 +229,9 @@ window.onload = function(){
 
             display.textContent = minutes + ":" + seconds;
 
-            if (estadoGanador){
-                timer = duration;
-            }
+            // if (estadoGanador){
+            //     clearInterval(reloj);
+            // }
 
             if (timer < 60 * 3){
                 document.getElementById("time").style.color="rgb(226, 226, 85)";
@@ -226,7 +247,7 @@ window.onload = function(){
                 alert(`Game OVER! la palabra es: "${palabraGanadora}"`);
                 location.reload();
             }
-        }, 1000);
+        }, 100);
     }
 }
 

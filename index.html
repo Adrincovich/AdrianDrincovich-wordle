@@ -24,7 +24,7 @@
         <div id="timer">Tenés <span id="time">05:00</span> minutos para resolver la palabra!</div>
     </header>
     <main>
-        <form>
+        <form id="form-wordle">
             <fieldset id="fila0" class="fieldset-wordle" disabled>
                 <input id="f0c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" autofocus onkeyup="return tabular(this, this.maxLength)"/> <!-- onkeyup="if (this.value.length == this.getAttribute('maxlength')) txt.focus()" /> -->
                 <input id="f0c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
