@@ -54,7 +54,7 @@ header {
     margin-bottom: 10px;
 }
 
-#timer, #time {
+#timer, #time, #mensaje-resultado{
     display: none;
     width: 100%;
     height: auto;
@@ -100,11 +100,11 @@ main {
     box-shadow: 0px 0px 0px;
 
 }
-
+/*
 input:disabled {
     background:#f1f1f1;
     border: 2px solid rgba(255, 255, 255, 0.900);
-  }
+  } */
 
 #guardar-partida{
     display:none;

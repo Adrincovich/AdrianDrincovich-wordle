@@ -23,15 +23,16 @@
             <button id="contactanos" class="button-nav"><a href="./HTML/contacto.html">Contactanos</a></button>
         </div>
         <div id="timer">Tenés <span id="time">05:00</span> minutos para resolver la palabra!</div>
+        <div id="mensaje-resultado"></div>
     </header>
     <main>
         <form id="form-wordle">
             <fieldset id="fila0" class="fieldset-wordle" disabled>
-                <input id="f0c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" autofocus onkeyup="return tabular(this, this.maxLength)"/> <!-- onkeyup="if (this.value.length == this.getAttribute('maxlength')) txt.focus()" /> -->
-                <input id="f0c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f0c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f0c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f0c4" class="input-wordle" type="text" maxlength="1" autocomplete="off">
+                <input id="f0c0" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/> <!-- onkeyup="if (this.value.length == this.getAttribute('maxlength')) txt.focus()" /> -->
+                <input id="f0c1" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
+                <input id="f0c2" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
+                <input id="f0c3" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
+                <input id="f0c4" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off">
             </fieldset>
             <fieldset id="fila1" class="fieldset-wordle" disabled>
                 <input id="f1c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>

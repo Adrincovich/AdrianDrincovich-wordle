@@ -52,7 +52,17 @@ var respuestas = [
     [],
 ]
 
-var estadoGanador = false
+var estadoGanador = false;
+var estadoPerdedor = false;
+
+function bloqueoFieldsetGanarOPerder() {
+    for (let indice = 0; indice < 6; indice++){
+        let fieldset = document.getElementById(`fila${indice}`);
+        if (estadoGanador || estadoPerdedor)
+        fieldset.disabled=true;
+    }
+}
+
 
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
@@ -65,32 +75,52 @@ function inicio () {
                 let respuestaUsuarioString = respuestaUsuario.join('');
 
                 if (respuestaUsuarioString == palabraGanadora){
-                    estadoGanador = true
+                    estadoGanador = true;
                     showBtn();
-                    alert("Ganaste");
-                    //location.reload();
+                    document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
+                    bloqueoFieldsetGanarOPerder()
                 }
 
                 if (indice == 0 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById(`fila1`).disabled=false;
+                    document.getElementById("fila1").disabled=false;
+                    document.getElementById("fila0").disabled=true;
+                    document.getElementById("f1c0").focus();
                 }
                 if (indice == 1 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById(`fila2`).disabled=false;
+                    document.getElementById("fila2").disabled=false;
+                    document.getElementById("fila1").disabled=true;
+                    document.getElementById("f2c0").focus();
                 }
                 if (indice == 2 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById(`fila3`).disabled=false;
+                    document.getElementById("fila3").disabled=false;
+                    document.getElementById("fila2").disabled=true;
+                    document.getElementById("f3c0").focus();
                 }
                 if (indice == 3 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById(`fila4`).disabled=false;
+                    document.getElementById("fila4").disabled=false;
+                    document.getElementById("fila3").disabled=true;
+                    document.getElementById("f4c0").focus();
                 }
                 if (indice == 4 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById(`fila5`).disabled=false;
+                    document.getElementById("fila5").disabled=false;
+                    document.getElementById("fila4").disabled=true;
+                    document.getElementById("f5c0").focus();
                 }
                 if (indice == 5  && respuestaUsuarioString != palabraGanadora){
-                    alert(`Game OVER! la palabra es: "${palabraGanadora}"`);
-                    location.reload();
+                    estadoPerdedor = true;
+                    showBtn();
+                    document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
+                    bloqueoFieldsetGanarOPerder()
                 }
             }
+            // for(let index = 0; index < 5; index++){
+            //     let input = document.getElementById(`f${indice}c${index}`);
+            //     input.onkeydown = function (event){
+            //         if(event.key === `Backspace`){
+            //             alert("hola")
+            //         }
+            //     }
+            // }
         }
     }
 }
@@ -120,11 +150,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['mates'/*, 'pasto','toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
+const palabrasDisponibles = ['mates', 'pasto','toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
                             'aguja', 'audio', 'cueva', 'domar', 'grave', 'fumar', 'freir', 'furia', 'ganar', 'gasto',
                             'perro', 'pista', 'arroz', 'arena', 'mirar', 'salto', 'corte', 'mareo', 'multa', 'micro',
                             'risas', 'nubes', 'notar', 'plomo', 'pulpa', 'pesar', 'parar', 'porra', 'techo', 'titan',
-                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado'*/]
+                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado']
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -156,8 +186,9 @@ function tabular(obj, tam) {
 function showBtn() {
     document.getElementById("volver-a-jugar-partida").style.display="inline-block";
     document.getElementById("guardar-partida").style.display="none";
-    // document.getElementById("timer").style.display="none";
-    // document.getElementById("time").style.display="none";
+    document.getElementById("mensaje-resultado").style.display="inline-block";
+    document.getElementById("time").style.display="none";
+    document.getElementById("timer").style.display="none";
 }
 
 window.onload = function(){
@@ -183,6 +214,7 @@ window.onload = function(){
             timer();
             hideBtn();
             document.getElementById("fila0").disabled=false;
+            document.getElementById("f0c0").focus();
         }
     }
 
@@ -203,14 +235,6 @@ window.onload = function(){
         document.getElementById("time").style.display="inline";
         }
 
-
-    function timer() {
-        var fiveMinutes = 60 * 5,
-        display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
-    }
-
-
     // function timer(startStop) {
     //     if (startStop){
     //         var fiveMinutes = 60 * 5,
@@ -221,6 +245,12 @@ window.onload = function(){
     //         clearInterval(reloj);
     //     }
     // }
+
+    function timer() {
+        var fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    }
 
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
@@ -233,7 +263,7 @@ window.onload = function(){
 
             display.textContent = minutes + ":" + seconds;
 
-            if (estadoGanador){
+            if (estadoGanador || estadoPerdedor){
                 clearInterval(reloj);
             }
 
@@ -246,14 +276,16 @@ window.onload = function(){
             }
 
             if (--timer < 0) {
+                estadoPerdedor = true;
                 timer = duration;
-                clearTimeout(timer);
-                alert(`Game OVER! la palabra es: "${palabraGanadora}"`);
-                location.reload();
+                showBtn();
+                document.getElementById("mensaje-resultado").innerHTML = `Game OVER! Tiempo finalizado. La palabra es: ${palabraGanadora}`;
+                bloqueoFieldsetGanarOPerder()
             }
-        }, 100);
+        }, 1000);
     }
 }
 
 
 
+//<a href="javascript:popUp('ejemplo44.html')" class="btn btn-info" role="button">Ver ejemplo</a>
