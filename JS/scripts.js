@@ -63,54 +63,76 @@ function bloqueoFieldsetGanarOPerder() {
     }
 }
 
+// function ValidaEspacioEnBlanco() {
+//     let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
+//     if( validarCaracter[0].value == "" ||
+//         validarCaracter[1].value == "" ||
+//         validarCaracter[2].value == "" ||
+//         validarCaracter[3].value == "" ||
+//         validarCaracter[4].value == ""){
+//         alert("pone algo");
+//         console.log(validarCaracter)
+//     }
+// }
+
 
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
-                guardarRespuesta(indice);
+                let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
+                if( validarCaracter[0].value == "" ||
+                    validarCaracter[1].value == "" ||
+                    validarCaracter[2].value == "" ||
+                    validarCaracter[3].value == "" ||
+                    validarCaracter[4].value == ""){
+                    alert("pone algo");
+                    console.log(validarCaracter)
+                }else{
+                    guardarRespuesta(indice);
 
-                let respuestaUsuario = respuestas[indice];
-                let respuestaUsuarioString = respuestaUsuario.join('');
+                    let respuestaUsuario = respuestas[indice];
+                    let respuestaUsuarioString = respuestaUsuario.join('');
 
-                if (respuestaUsuarioString == palabraGanadora){
-                    estadoGanador = true;
-                    showBtn();
-                    document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
-                    bloqueoFieldsetGanarOPerder()
-                }
+                    if (respuestaUsuarioString == palabraGanadora){
+                        estadoGanador = true;
+                        showBtn();
+                        document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
+                        bloqueoFieldsetGanarOPerder()
+                    }
 
-                if (indice == 0 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById("fila1").disabled=false;
-                    document.getElementById("fila0").disabled=true;
-                    document.getElementById("f1c0").focus();
-                }
-                if (indice == 1 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById("fila2").disabled=false;
-                    document.getElementById("fila1").disabled=true;
-                    document.getElementById("f2c0").focus();
-                }
-                if (indice == 2 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById("fila3").disabled=false;
-                    document.getElementById("fila2").disabled=true;
-                    document.getElementById("f3c0").focus();
-                }
-                if (indice == 3 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById("fila4").disabled=false;
-                    document.getElementById("fila3").disabled=true;
-                    document.getElementById("f4c0").focus();
-                }
-                if (indice == 4 && respuestaUsuarioString != palabraGanadora){
-                    document.getElementById("fila5").disabled=false;
-                    document.getElementById("fila4").disabled=true;
-                    document.getElementById("f5c0").focus();
-                }
-                if (indice == 5  && respuestaUsuarioString != palabraGanadora){
-                    estadoPerdedor = true;
-                    showBtn();
-                    document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
-                    bloqueoFieldsetGanarOPerder()
+                    if (indice == 0 && respuestaUsuarioString != palabraGanadora){
+                        document.getElementById("fila1").disabled=false;
+                        document.getElementById("fila0").disabled=true;
+                        document.getElementById("f1c0").focus();
+                    }
+                    if (indice == 1 && respuestaUsuarioString != palabraGanadora){
+                        document.getElementById("fila2").disabled=false;
+                        document.getElementById("fila1").disabled=true;
+                        document.getElementById("f2c0").focus();
+                    }
+                    if (indice == 2 && respuestaUsuarioString != palabraGanadora){
+                        document.getElementById("fila3").disabled=false;
+                        document.getElementById("fila2").disabled=true;
+                        document.getElementById("f3c0").focus();
+                    }
+                    if (indice == 3 && respuestaUsuarioString != palabraGanadora){
+                        document.getElementById("fila4").disabled=false;
+                        document.getElementById("fila3").disabled=true;
+                        document.getElementById("f4c0").focus();
+                    }
+                    if (indice == 4 && respuestaUsuarioString != palabraGanadora){
+                        document.getElementById("fila5").disabled=false;
+                        document.getElementById("fila4").disabled=true;
+                        document.getElementById("f5c0").focus();
+                    }
+                    if (indice == 5  && respuestaUsuarioString != palabraGanadora){
+                        estadoPerdedor = true;
+                        showBtn();
+                        document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
+                        bloqueoFieldsetGanarOPerder()
+                    }
                 }
             }
             // for(let index = 0; index < 5; index++){
