@@ -73,7 +73,7 @@ function mensajeDeErrorEnter() {
 
 function mensajeDeErrorValor() {
     errorCampoValor = document.getElementById("mensaje-error");
-    errorCampoValor.innerHTML = "Introduzca solo letras mayuscula";
+    errorCampoValor.innerHTML = "Introduzca solo letras mayusculas";
     errorCampoValor.style.visibility = "visible"
 }
 
@@ -237,17 +237,21 @@ window.onload = function(){
 
     const nuevaPartida = document.getElementById("nueva-partida");
     const jugarPartida = document.getElementById("volver-a-jugar-partida");
+    const form = document.getElementById("formulario-usuario");
+    const name = document.getElementById("nombre-jugador-input");
 
-    function user() {
-        let player = {
-          name: null
-        }
-        player.name = prompt("Ingrese su nombre para jugar:");
-        if (!player.name) {
-            alert("Debe ingresar un nombre para jugar.");
-            return;
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        var regexName = new RegExp ("^[A-Za-z0-9]+$");
+        let nameValue = name.value;
+        let regexValue = regexName.test(nameValue);
+
+        if ((name.value.length < 3) || (regexValue == false || (name.value == ""))) {
+            errorNombre.innerHTML = 'Ingrese un nombre no menor a 3 caracteres alfanumericos.'
+            return false; //se utiliza para abortar la funcion
         } else {
-            alert("Muchas gracias, el juego ha comenzado " + player.name + "!");
+         document.getElementById("nombre-jugador").style.display="none";
             estadoGanador = false;
             inicio();
             pintarTablero();
@@ -256,11 +260,16 @@ window.onload = function(){
             document.getElementById("fila0").disabled=false;
             document.getElementById("f0c0").focus();
             mensajeDeErrorValor();
+
+            localStorage.setItem('nombre', name.value);
+
+            // obtenerSaves(name.value);
         }
-    }
+    })
 
     nuevaPartida.addEventListener("click", function(){
-        user();
+        document.getElementById("nombre-jugador").style.display="flex";
+        document.getElementById("nombre-jugador-input").focus();
     })
 
     jugarPartida.addEventListener("click", function(){
@@ -275,17 +284,6 @@ window.onload = function(){
         document.getElementById("timer").style.display="block";
         document.getElementById("time").style.display="inline";
         }
-
-    // function timer(startStop) {
-    //     if (startStop){
-    //         var fiveMinutes = 60 * 5,
-    //         display = document.querySelector('#time');
-    //         startTimer(fiveMinutes, display);
-    //         }
-    //     else {
-    //         clearInterval(reloj);
-    //     }
-    // }
 
     function timer() {
         var fiveMinutes = 60 * 5,
@@ -313,7 +311,7 @@ window.onload = function(){
             }
 
             if (timer < 60){
-                document.getElementById("time").style.color="rgb(160, 29, 29)";
+                document.getElementById("time").style.color="rgb(226, 38, 38)";
             }
 
             if (--timer < 0) {
