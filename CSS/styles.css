@@ -8,14 +8,14 @@ header {
     height: auto;
     min-height: 130px;
     padding-top: 20px;
-    font-size: 45px;
+    font-size: 40px;
     color: rgb(231, 222, 222);
 }
 
 .header {
     color: #f1f1f1;
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .button-nav {
@@ -59,9 +59,19 @@ header {
     width: 100%;
     height: auto;
     text-align: center;
-    min-height: 30px;
-    padding-bottom: 20px;
+    min-height: 15px;
+    padding-bottom: 10px;
     font-size: 30px;
+    color: #f1f1f1
+}
+
+#mensaje-error {
+    visibility: hidden;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 5px;
     color: #f1f1f1
 }
 

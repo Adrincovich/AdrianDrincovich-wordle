@@ -65,6 +65,23 @@ function bloqueoFieldsetGanarOPerder() {
     }
 }
 
+function mensajeDeErrorEnter() {
+    errorCampoVacio = document.getElementById("mensaje-error");
+    errorCampoVacio.innerHTML = "Complete todos los campos de la fila";
+    errorCampoVacio.style.visibility = "visible"
+}
+
+function mensajeDeErrorValor() {
+    errorCampoValor = document.getElementById("mensaje-error");
+    errorCampoValor.innerHTML = "Introduzca solo letras minusculas";
+    errorCampoValor.style.visibility = "visible"
+}
+
+function eliminarMensajeDeError() {
+    errorCampoValor = document.getElementById("mensaje-error");
+    errorCampoValor.style.visibility = "hidden";
+}
+
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
@@ -84,13 +101,14 @@ function inicio () {
                 let input4 = regex.test(valor4);
 
                 if( valor0 == "" || valor1 == "" || valor2.value == "" || valor3 == "" || valor4 == ""){
-                     document.getElementById("mensaje-error").innerHTML = "Introduzca un valor";
+                    mensajeDeErrorEnter();
 
                 }else if (input0 == false || input1 == false || input2 == false || input3 == false || input4 == false){
-                    document.getElementById("mensaje-error").innerHTML = "Introduzca solo letras minusculas";
+                    mensajeDeErrorValor();
 
                 }else {
                     guardarRespuesta(indice);
+                    eliminarMensajeDeError();
 
                     let respuestaUsuario = respuestas[indice];
                     let respuestaUsuarioString = respuestaUsuario.join('');
