@@ -116,6 +116,7 @@ function inicio () {
                     if (respuestaUsuarioString == palabraGanadora){
                         estadoGanador = true;
                         showBtn();
+                        document.getElementById("mensaje-resultado").style.color = "rgb(21, 211, 21)";
                         document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
                         bloqueoFieldsetGanarOPerder();
                     }
@@ -156,8 +157,8 @@ function inicio () {
             // for(let index = 0; index < 5; index++){
             //     let input = document.getElementById(`f${indice}c${index}`);
             //     input.onkeydown = function (event){
-            //         if(event.key === `Backspace`){
-            //             alert("hola")
+            //         if(event.key === `Backspace` && input.value == ""){
+            //             input.addEventListener("keydown", backInput(this, this.minlength))
             //         }
             //     }
             // }
@@ -217,6 +218,21 @@ function tabular(obj, tam) {
         }
     }
     frm.elements[i+1].focus();
+    return false;
+    }
+}
+
+function backInput(obj, tam) {
+    let frm = obj.form;
+    let largo = obj.value.length;
+        if (largo == tam) {
+            for(i=0;i<frm.elements.length;i++) {
+                if(frm.elements[i]==obj) {
+                if (i==frm.elements.length-1) { i=-1; }
+            break;
+        }
+    }
+    frm.elements[i-1].focus();
     return false;
     }
 }
