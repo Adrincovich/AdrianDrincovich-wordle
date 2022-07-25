@@ -24,12 +24,12 @@
         </div>
         <div id="timer">Tenés <span id="time">05:00</span> minutos para resolver la palabra!</div>
         <div id="mensaje-resultado"></div>
-        <div id="mensaje-error"></div>
+        <div id="mensaje-error">Introduzca solo letras mayusculas</div>
     </header>
     <main>
         <form id="form-wordle">
             <fieldset id="fila0" class="fieldset-wordle" disabled>
-                <input id="f0c0" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" pattern="[a-z]" onkeyup="return tabular(this, this.maxLength)"/> <!-- onkeyup="if (this.value.length == this.getAttribute('maxlength')) txt.focus()" /> -->
+                <input id="f0c0" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/> <!-- onkeyup="if (this.value.length == this.getAttribute('maxlength')) txt.focus()" /> -->
                 <input id="f0c1" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
                 <input id="f0c2" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
                 <input id="f0c3" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>

@@ -52,7 +52,7 @@ var respuestas = [
     [],
 ]
 
-var regex = new RegExp ("[a-z]");
+var regex = new RegExp ("[A-Z]");
 
 var estadoGanador = false;
 var estadoPerdedor = false;
@@ -73,7 +73,7 @@ function mensajeDeErrorEnter() {
 
 function mensajeDeErrorValor() {
     errorCampoValor = document.getElementById("mensaje-error");
-    errorCampoValor.innerHTML = "Introduzca solo letras minusculas";
+    errorCampoValor.innerHTML = "Introduzca solo letras mayuscula";
     errorCampoValor.style.visibility = "visible"
 }
 
@@ -190,11 +190,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['mates', 'pasto','toser', 'pisar', 'marco', 'dardo', 'freir', 'truco', 'poste', 'cenar',
-                            'aguja', 'audio', 'cueva', 'domar', 'grave', 'fumar', 'freir', 'furia', 'ganar', 'gasto',
-                            'perro', 'pista', 'arroz', 'arena', 'mirar', 'salto', 'corte', 'mareo', 'multa', 'micro',
-                            'risas', 'nubes', 'notar', 'plomo', 'pulpa', 'pesar', 'parar', 'porra', 'techo', 'titan',
-                            'brisa', 'acero', 'birra', 'barra', 'marzo', 'abril', 'junio', 'julio', 'enero', 'asado']
+const palabrasDisponibles = ['MATES', 'PASTO','TOSER', 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
+                            'AGUJA', 'AUDIO', 'CUEVA', 'DOMAR', 'GRAVE', 'FUMAR', 'FRITO', 'FURIA', 'GANAR', 'GASTO',
+                            'PERRO', 'PISTA', 'ARROZ', 'ARENA', 'MIRAR', 'SALTO', 'CORTE', 'MAREO', 'MULTA', 'MICRO',
+                            'RISAS', 'NUBES', 'NOTAR', 'PLOMO', 'PULPA', 'PESAR', 'PARAR', 'PORRA', 'TECHO', 'TITAN',
+                            'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO']
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -255,6 +255,7 @@ window.onload = function(){
             hideBtn();
             document.getElementById("fila0").disabled=false;
             document.getElementById("f0c0").focus();
+            mensajeDeErrorValor();
         }
     }
 
