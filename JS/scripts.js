@@ -52,29 +52,18 @@ var respuestas = [
     [],
 ]
 
+var regex = new RegExp ("[a-z]");
+
 var estadoGanador = false;
 var estadoPerdedor = false;
 
 function bloqueoFieldsetGanarOPerder() {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
-        if (estadoGanador || estadoPerdedor)
+        if (estadoGanador || estadoPerdedor);
         fieldset.disabled=true;
     }
 }
-
-// function ValidaEspacioEnBlanco() {
-//     let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
-//     if( validarCaracter[0].value == "" ||
-//         validarCaracter[1].value == "" ||
-//         validarCaracter[2].value == "" ||
-//         validarCaracter[3].value == "" ||
-//         validarCaracter[4].value == ""){
-//         alert("pone algo");
-//         console.log(validarCaracter)
-//     }
-// }
-
 
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
@@ -82,14 +71,25 @@ function inicio () {
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
                 let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
-                if( validarCaracter[0].value == "" ||
-                    validarCaracter[1].value == "" ||
-                    validarCaracter[2].value == "" ||
-                    validarCaracter[3].value == "" ||
-                    validarCaracter[4].value == ""){
-                    alert("pone algo");
-                    console.log(validarCaracter)
-                }else{
+                let valor0 = validarCaracter[0].value;
+                let valor1 = validarCaracter[1].value;
+                let valor2 = validarCaracter[2].value;
+                let valor3 = validarCaracter[3].value;
+                let valor4 = validarCaracter[4].value;
+
+                let input0 = regex.test(valor0);
+                let input1 = regex.test(valor1);
+                let input2 = regex.test(valor2);
+                let input3 = regex.test(valor3);
+                let input4 = regex.test(valor4);
+
+                if( valor0 == "" || valor1 == "" || valor2.value == "" || valor3 == "" || valor4 == ""){
+                     document.getElementById("mensaje-error").innerHTML = "Introduzca un valor";
+
+                }else if (input0 == false || input1 == false || input2 == false || input3 == false || input4 == false){
+                    document.getElementById("mensaje-error").innerHTML = "Introduzca solo letras minusculas";
+
+                }else {
                     guardarRespuesta(indice);
 
                     let respuestaUsuario = respuestas[indice];
@@ -99,7 +99,7 @@ function inicio () {
                         estadoGanador = true;
                         showBtn();
                         document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
-                        bloqueoFieldsetGanarOPerder()
+                        bloqueoFieldsetGanarOPerder();
                     }
 
                     if (indice == 0 && respuestaUsuarioString != palabraGanadora){
@@ -131,7 +131,7 @@ function inicio () {
                         estadoPerdedor = true;
                         showBtn();
                         document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
-                        bloqueoFieldsetGanarOPerder()
+                        bloqueoFieldsetGanarOPerder();
                     }
                 }
             }
