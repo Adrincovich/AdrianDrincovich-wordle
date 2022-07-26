@@ -259,12 +259,12 @@ window.onload = function(){
     form.addEventListener("submit", function(e){
         e.preventDefault();
 
-        var regexName = new RegExp ("^[A-Za-z0-9]+$");
+        var regexName = new RegExp ("^[A-Za-z]+$");
         let nameValue = name.value;
         let regexValue = regexName.test(nameValue);
 
         if ((name.value.length < 3) || (regexValue == false || (name.value == ""))) {
-            errorNombre.innerHTML = 'Ingrese un nombre no menor a 3 caracteres alfanumericos.'
+            errorNombre.innerHTML = 'Ingrese un nombre mayor a 2 digitos. Solo letras sin espacios.'
             return false; //se utiliza para abortar la funcion
         } else {
          document.getElementById("nombre-jugador").style.display="none";

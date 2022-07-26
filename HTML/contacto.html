@@ -13,8 +13,10 @@
 </head>
 <body>
     <header>
-        <div class="header">EXAMEN FINAL LPPA</div>
-        <div class="header">WORDLE</div>
+        <h1 class="header">EXAMEN FINAL LPPA</h1>
+        <h2 class="header">
+            <a class="header" href="../index.html">WORDLE</a>
+        </h2>
         <div id="buttons">
             <button id="contactanos" class="button-nav"><a href="../index.html">VOLVER AL JUEGO</a></button>
         </div>
@@ -23,21 +25,21 @@
         <form id="formulario-contacto">
             <fieldset class="fieldset-contacto">
                 <label for="name">Nombre</label>
-                <input id="name" class="formulario-clase" type="text" name="name" required>
-                <p></p>
+                <input id="name" class="formulario-clase" type="text" name="name">
+                <p id="name-error" class="errores-formulario-contacto">Ingrese valores alfanumericos. Mas de 2 caracteres</p>
             </fieldset>
             <fieldset class="fieldset-contacto">
                 <label for="email">Email</label>
-                <input id="email" class="formulario-clase" type="email" name="email" required>
-                <p></p>
+                <input id="email" class="formulario-clase" type="text" name="email">
+                <p id="email-error" class="errores-formulario-contacto">Ingrese un formato de email válido.</p>
             </fieldset>
             <fieldset class="fieldset-contacto">
                 <label for="comentario">Comentario</label>
-                <textarea id="comentario" class="formulario-clase" name="comentario" rows="5" cols="50" minlength="5" required></textarea>
-                <p></p>
+                <textarea type="text" id="comentario" class="formulario-clase" name="comentario" rows="5" cols="50"></textarea>
+                <p id="comentario-error" class="errores-formulario-contacto">Ingrese mas de 5 caracteres.</p>
             </fieldset>
             <fieldset class="fieldset-contacto">
-                <input id="submit" class="enviar-form btn btn-primary" type="submit" value="Enviar">
+                <input id="submit" class="enviar-form btn btn-primary" type="submit" value="ENVIAR">
             </fieldset>
         </form>
     </main>

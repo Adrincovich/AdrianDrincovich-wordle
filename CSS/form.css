@@ -12,11 +12,8 @@
     color: white;
 }
 
-
-
 label, textarea, input {
-
-    margin: 5px;
+    margin: 3px;
     padding: 5px;
     color: #f1f1f1;
     font-size: 14px;
@@ -31,9 +28,15 @@ input, textarea {
 }
 
 #submit {
-    background-color: #f1f1f1;;
-    color: rgb(160, 29, 29);
+    background-color: rgb(21, 211, 21);;
+    color: #181818;
     font-weight: bold;
     cursor: pointer;
     border: 0px;
+}
+
+.errores-formulario-contacto {
+    visibility: hidden;
+    margin: 7px;
+    color: rgb(226, 38, 38);
 }

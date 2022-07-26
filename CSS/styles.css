@@ -18,6 +18,16 @@ header {
     padding-bottom: 10px;
 }
 
+.header :link {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+.header :visited {
+    text-decoration: none;
+    color: #f1f1f1;
+}
+
 .button-nav {
     background-color: #f1f1f1;
     min-width: 105px;

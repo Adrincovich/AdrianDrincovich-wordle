@@ -6,8 +6,41 @@ window.onload = function() {
 
     form.addEventListener("submit", function(e){
         e.preventDefault();
-        window.open(`mailto:adrian.drincovich@gmail.com?subject=Consulta de ${name.value}&body=${text.value}`);
-        form.reset();
+        var regexName = new RegExp ("^[a-zA-Z0-9_]*$");
+        let nameValue = name.value;
+        let regexValueName = regexName.test(nameValue);
+
+        var regexEmail = new RegExp ("[a-z0-9]+@[a-z]+\.[a-z]{2,3}");
+        let emailValue = email.value;
+        let regexValueEmail = regexEmail.test(emailValue);
+
+        if(name.value.length < 3 ||regexValueName == false || name.value == ""){
+            document.getElementById("name-error").style.visibility = "visible"
+
+        }else if(regexValueEmail == false || email.value == ""){
+            document.getElementById("email-error").style.visibility = "visible"
+
+        }else if (text.value.length < 5 || text.value == ""){
+            document.getElementById("comentario-error").style.visibility = "visible"
+
+        }else {
+            console.log(regexValueName)
+            window.open(`mailto:adrian.drincovich@gmail.com?subject=Consulta de ${name.value}&body=${text.value}`);
+            form.reset();
+        }
     })
+
+    name.addEventListener("focus", function(){
+        document.getElementById("name-error").style.visibility = "hidden"
+    })
+
+    email.addEventListener("focus", function(){
+        document.getElementById("email-error").style.visibility = "hidden"
+    })
+
+    text.addEventListener("focus", function(){
+        document.getElementById("comentario-error").style.visibility = "hidden"
+    })
+
 
 }
