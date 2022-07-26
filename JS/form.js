@@ -2,7 +2,13 @@ window.onload = function() {
     const form = document.getElementById("formulario-contacto");
     const name = document.getElementById("name");
     const email = document.getElementById("email");
-    const text = document.getElementById("comentario")
+    const text = document.getElementById("comentario");
+
+    const estadoValidaciones = {
+        name: false,
+        email: false,
+        text: false,
+      };
 
     form.addEventListener("submit", function(e){
         e.preventDefault();
@@ -16,14 +22,28 @@ window.onload = function() {
 
         if(name.value.length < 3 ||regexValueName == false || name.value == ""){
             document.getElementById("name-error").style.visibility = "visible"
-
-        }else if(regexValueEmail == false || email.value == ""){
-            document.getElementById("email-error").style.visibility = "visible"
-
-        }else if (text.value.length < 5 || text.value == ""){
-            document.getElementById("comentario-error").style.visibility = "visible"
-
         }else {
+            estadoValidaciones.name = true;
+        }
+
+
+        if(regexValueEmail == false || email.value == ""){
+            document.getElementById("email-error").style.visibility = "visible"
+        }else {
+            estadoValidaciones.email = true;
+        }
+
+        if(text.value.length < 5 || text.value == ""){
+            document.getElementById("comentario-error").style.visibility = "visible"
+        }else {
+            estadoValidaciones.text = true;
+        }
+
+        if (estadoValidaciones.name && estadoValidaciones.email && estadoValidaciones.text){
+            estadoValidaciones.name = false;
+            estadoValidaciones.email = false;
+            estadoValidaciones.text = false;
+
             console.log(regexValueName)
             window.open(`mailto:adrian.drincovich@gmail.com?subject=Consulta de ${name.value}&body=${text.value}`);
             form.reset();
