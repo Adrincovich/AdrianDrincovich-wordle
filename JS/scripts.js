@@ -77,6 +77,12 @@ function mensajeDeErrorValor() {
     errorCampoValor.style.visibility = "visible"
 }
 
+function mensajeDeErrorUnaLetra() {
+    errorCampoValor = document.getElementById("mensaje-error");
+    errorCampoValor.innerHTML = "Introduzca solo una letra por campo";
+    errorCampoValor.style.visibility = "visible"
+}
+
 function eliminarMensajeDeError() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.style.visibility = "hidden";
@@ -100,13 +106,17 @@ function inicio () {
                 let input3 = regex.test(valor3);
                 let input4 = regex.test(valor4);
 
-                if( valor0 == "" || valor1 == "" || valor2.value == "" || valor3 == "" || valor4 == ""){
+                if (valor0 == "" || valor1 == "" || valor2 == "" || valor3 == "" || valor4 == ""){
                     mensajeDeErrorEnter();
 
                 }else if (input0 == false || input1 == false || input2 == false || input3 == false || input4 == false){
                     mensajeDeErrorValor();
 
-                }else {
+                }else if (valor0.length > 1 || valor1.length  > 1 || valor2.length > 1 || valor3.length > 1 || valor4.length > 1 ){
+                    mensajeDeErrorUnaLetra();
+                }
+
+                else {
                     guardarRespuesta(indice);
                     eliminarMensajeDeError();
 

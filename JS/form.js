@@ -20,7 +20,7 @@ window.onload = function() {
         let emailValue = email.value;
         let regexValueEmail = regexEmail.test(emailValue);
 
-        if(name.value.length < 3 ||regexValueName == false || name.value == ""){
+        if(name.value.length < 3 || regexValueName == false || name.value == ""){
             document.getElementById("name-error").style.visibility = "visible"
         }else {
             estadoValidaciones.name = true;
