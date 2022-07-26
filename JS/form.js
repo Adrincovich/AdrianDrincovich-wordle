@@ -21,20 +21,19 @@ window.onload = function() {
         let regexValueEmail = regexEmail.test(emailValue);
 
         if(name.value.length < 3 || regexValueName == false || name.value == ""){
-            document.getElementById("name-error").style.visibility = "visible"
+            document.getElementById("name-error").style.visibility = "visible";
         }else {
             estadoValidaciones.name = true;
         }
 
-
         if(regexValueEmail == false || email.value == ""){
-            document.getElementById("email-error").style.visibility = "visible"
+            document.getElementById("email-error").style.visibility = "visible";
         }else {
             estadoValidaciones.email = true;
         }
 
         if(text.value.length < 5 || text.value == ""){
-            document.getElementById("comentario-error").style.visibility = "visible"
+            document.getElementById("comentario-error").style.visibility = "visible";
         }else {
             estadoValidaciones.text = true;
         }
@@ -51,15 +50,15 @@ window.onload = function() {
     })
 
     name.addEventListener("focus", function(){
-        document.getElementById("name-error").style.visibility = "hidden"
+        document.getElementById("name-error").style.visibility = "hidden";
     })
 
     email.addEventListener("focus", function(){
-        document.getElementById("email-error").style.visibility = "hidden"
+        document.getElementById("email-error").style.visibility = "hidden";
     })
 
     text.addEventListener("focus", function(){
-        document.getElementById("comentario-error").style.visibility = "hidden"
+        document.getElementById("comentario-error").style.visibility = "hidden";
     })
 
 

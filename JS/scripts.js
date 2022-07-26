@@ -1,6 +1,4 @@
 
-
-
 //matriz colores del tablero
 
 var colorTablero = [
@@ -52,6 +50,30 @@ var respuestas = [
     [],
 ]
 
+
+function saveProgress(){
+
+    //Declaro un array "save" y le guardo los datos necesarios para poder continuar jugando en otro momento
+    let save = {};
+
+    save.fecha = new Date().toLocaleString('es-AR', {timeZone:'America/Argentina/Buenos_Aires'});
+    save.tiempo = document.querySelector('#time').innerHTML;
+    save.respuestas = respuestas;
+    save.usuario = document.getElementById("nombre-jugador-input").value;
+    save.palabraGanadora = palabraGanadora;
+
+    //Traigo del localStorage el array "saves", si no esta le asigno "[]"
+    let savesArray = JSON.parse(localStorage.getItem('saves')) || [];
+    savesArray.push(save);
+    //Convierto mi array de saves a json
+    let savesArrayJSON = JSON.stringify(savesArray);
+    //Guardo mi array de saves en formato JSON en el local storage
+    localStorage.setItem("saves", savesArrayJSON);
+
+    // console.log(savesArray)
+    window.location.href = "../index.html";
+}
+
 var regex = new RegExp ("[A-Z]");
 
 var estadoGanador = false;
@@ -68,19 +90,19 @@ function bloqueoFieldsetGanarOPerder() {
 function mensajeDeErrorEnter() {
     errorCampoVacio = document.getElementById("mensaje-error");
     errorCampoVacio.innerHTML = "Complete todos los campos de la fila";
-    errorCampoVacio.style.visibility = "visible"
+    errorCampoVacio.style.visibility = "visible";
 }
 
 function mensajeDeErrorValor() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.innerHTML = "Introduzca solo letras mayusculas";
-    errorCampoValor.style.visibility = "visible"
+    errorCampoValor.style.visibility = "visible";
 }
 
 function mensajeDeErrorUnaLetra() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.innerHTML = "Introduzca solo una letra por campo";
-    errorCampoValor.style.visibility = "visible"
+    errorCampoValor.style.visibility = "visible";
 }
 
 function eliminarMensajeDeError() {
@@ -164,14 +186,6 @@ function inicio () {
                     }
                 }
             }
-            // for(let index = 0; index < 5; index++){
-            //     let input = document.getElementById(`f${indice}c${index}`);
-            //     input.onkeydown = function (event){
-            //         if(event.key === `Backspace` && input.value == ""){
-            //             input.addEventListener("keydown", backInput(this, this.minlength))
-            //         }
-            //     }
-            // }
         }
     }
 }
@@ -201,11 +215,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['MATES', 'PASTO','TOSER', 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
-                            'AGUJA', 'AUDIO', 'CUEVA', 'DOMAR', 'GRAVE', 'FUMAR', 'FRITO', 'FURIA', 'GANAR', 'GASTO',
-                            'PERRO', 'PISTA', 'ARROZ', 'ARENA', 'MIRAR', 'SALTO', 'CORTE', 'MAREO', 'MULTA', 'MICRO',
-                            'RISAS', 'NUBES', 'NOTAR', 'PLOMO', 'PULPA', 'PESAR', 'PARAR', 'PORRA', 'TECHO', 'TITAN',
-                            'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO']
+const palabrasDisponibles = ['MATES', 'PASTO', 'TOSER', 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
+                             'AGUJA', 'AUDIO', 'CUEVA', 'DOMAR', 'GRAVE', 'FUMAR', 'FRITO', 'FURIA', 'GANAR', 'GASTO',
+                             'PERRO', 'PISTA', 'ARROZ', 'ARENA', 'MIRAR', 'SALTO', 'CORTE', 'MAREO', 'MULTA', 'MICRO',
+                             'RISAS', 'NUBES', 'NOTAR', 'PLOMO', 'PULPA', 'PESAR', 'PARAR', 'PORRA', 'TECHO', 'TITAN',
+                             'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO']
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -213,13 +227,15 @@ function elegirPalabraAlAzar(palabrasDisponibles) {
 
 var palabraGanadora = elegirPalabraAlAzar(palabrasDisponibles);
 
-var arrayPalabraGanadora = palabraGanadora.split("")
+var arrayPalabraGanadora = palabraGanadora.split("");
 
 // salto de input
 
-function tabular(obj, tam) {
+function tabular(e) {
+    let obj = e.target
     let frm = obj.form;
     let largo = obj.value.length;
+    let tam = obj.maxLength;
         if (largo == tam) {
             for(i=0;i<frm.elements.length;i++) {
                 if(frm.elements[i]==obj) {
@@ -232,23 +248,6 @@ function tabular(obj, tam) {
     }
 }
 
-function backInput(obj, tam) {
-    let frm = obj.form;
-    let largo = obj.value.length;
-        if (largo == tam) {
-            for(i=0;i<frm.elements.length;i++) {
-                if(frm.elements[i]==obj) {
-                if (i==frm.elements.length-1) { i=-1; }
-            break;
-        }
-    }
-    frm.elements[i-1].focus();
-    return false;
-    }
-}
-
-
-
 function showBtn() {
     document.getElementById("volver-a-jugar-partida").style.display="inline-block";
     document.getElementById("guardar-partida").style.display="none";
@@ -259,10 +258,18 @@ function showBtn() {
 
 window.onload = function(){
 
+    let inputsForm = document.getElementById("form-wordle").querySelectorAll("input");
+
+    inputsForm.forEach(function (x){
+        x.addEventListener("keyup", tabular);
+    })
+
     //Funcion para ingresar nombre
 
     const nuevaPartida = document.getElementById("nueva-partida");
-    const jugarPartida = document.getElementById("volver-a-jugar-partida");
+    const volverAJugar = document.getElementById("volver-a-jugar-partida");
+    const gurdarPartida = document.getElementById("guardar-partida");
+
     const form = document.getElementById("formulario-usuario");
     const name = document.getElementById("nombre-jugador-input");
 
@@ -273,7 +280,7 @@ window.onload = function(){
         let nameValue = name.value;
         let regexValue = regexName.test(nameValue);
 
-        if ((name.value.length < 3) || (regexValue == false || (name.value == ""))) {
+        if (name.value.length < 3 || regexValue == false || name.value == "") {
             errorNombre.innerHTML = 'Ingrese un nombre mayor a 2 digitos. Solo letras sin espacios.'
             return false; //se utiliza para abortar la funcion
         } else {
@@ -287,7 +294,7 @@ window.onload = function(){
             document.getElementById("f0c0").focus();
             mensajeDeErrorValor();
 
-            localStorage.setItem('nombre', name.value);
+            //localStorage.setItem('nombre', name.value);
 
             // obtenerSaves(name.value);
         }
@@ -298,8 +305,15 @@ window.onload = function(){
         document.getElementById("nombre-jugador-input").focus();
     })
 
-    jugarPartida.addEventListener("click", function(){
+    volverAJugar.addEventListener("click", function(){
+        estadoGanador = false;
+        estadoPerdedor = false;
         location.reload();
+    })
+
+
+    gurdarPartida.addEventListener("click", function(){
+        saveProgress();
     })
 
     // Nueva partida, esconder botones
@@ -320,7 +334,7 @@ window.onload = function(){
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
         var reloj = setInterval(function () {
-            minutes = parseInt(timer / 60, 10)
+            minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
 
             minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -345,7 +359,7 @@ window.onload = function(){
                 timer = duration;
                 showBtn();
                 document.getElementById("mensaje-resultado").innerHTML = `Game OVER! Tiempo finalizado. La palabra es: ${palabraGanadora}`;
-                bloqueoFieldsetGanarOPerder()
+                bloqueoFieldsetGanarOPerder();
             }
         }, 1000);
     }

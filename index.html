@@ -40,52 +40,52 @@
     <main>
         <form id="form-wordle">
             <fieldset id="fila0" class="fieldset-wordle" disabled>
-                <input id="f0c0" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f0c1" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f0c1.value == '') f0c0.focus()"/>
-                <input id="f0c2" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f0c2.value == '') f0c1.focus()"/>
-                <input id="f0c3" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f0c3.value == '') f0c2.focus()"/>
-                <input id="f0c4" class="input-wordle input-wordle0" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f0c4.value == '') f0c3.focus()"/>
+                <input id="f0c0" class="input-wordle" maxlength="1"/>
+                <input id="f0c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f0c1.value == '') f0c0.focus()"/>
+                <input id="f0c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f0c2.value == '') f0c1.focus()"/>
+                <input id="f0c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f0c3.value == '') f0c2.focus()"/>
+                <input id="f0c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f0c4.value == '') f0c3.focus()"/>
             </fieldset>
             <fieldset id="fila1" class="fieldset-wordle" disabled>
-                <input id="f1c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f1c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f1c1.value == '') f1c0.focus()"/>
-                <input id="f1c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f1c2.value == '') f1c1.focus()"/>
-                <input id="f1c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f1c3.value == '') f1c2.focus()"/>
-                <input id="f1c4" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f1c4.value == '') f1c3.focus()"/>
+                <input id="f1c0" class="input-wordle" maxlength="1"/>
+                <input id="f1c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f1c1.value == '') f1c0.focus()"/>
+                <input id="f1c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f1c2.value == '') f1c1.focus()"/>
+                <input id="f1c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f1c3.value == '') f1c2.focus()"/>
+                <input id="f1c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f1c4.value == '') f1c3.focus()"/>
             </fieldset>
             <fieldset id="fila2" class="fieldset-wordle" disabled>
-                <input id="f2c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f2c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f2c1.value == '') f2c0.focus()"/>
-                <input id="f2c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f2c2.value == '') f2c1.focus()"/>
-                <input id="f2c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f2c3.value == '') f2c2.focus()"/>
-                <input id="f2c4" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f2c4.value == '') f2c3.focus()"/>
+                <input id="f2c0" class="input-wordle" maxlength="1"/>
+                <input id="f2c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f2c1.value == '') f2c0.focus()"/>
+                <input id="f2c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f2c2.value == '') f2c1.focus()"/>
+                <input id="f2c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f2c3.value == '') f2c2.focus()"/>
+                <input id="f2c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f2c4.value == '') f2c3.focus()"/>
             </fieldset>
             <fieldset id="fila3" class="fieldset-wordle" disabled>
-                <input id="f3c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f3c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f3c1.value == '') f3c0.focus()"/>
-                <input id="f3c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f3c2.value == '') f3c1.focus()"/>
-                <input id="f3c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f3c3.value == '') f3c2.focus()"/>
-                <input id="f3c4" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f3c4.value == '') f3c3.focus()"/>
+                <input id="f3c0" class="input-wordle" maxlength="1"/>
+                <input id="f3c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f3c1.value == '') f3c0.focus()"/>
+                <input id="f3c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f3c2.value == '') f3c1.focus()"/>
+                <input id="f3c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f3c3.value == '') f3c2.focus()"/>
+                <input id="f3c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f3c4.value == '') f3c3.focus()"/>
             </fieldset>
             <fieldset id="fila4" class="fieldset-wordle" disabled>
-                <input id="f4c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f4c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f4c1.value == '') f4c0.focus()"/>
-                <input id="f4c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f4c2.value == '') f4c1.focus()"/>
-                <input id="f4c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f4c3.value == '') f4c2.focus()"/>
-                <input id="f4c4" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f4c4.value == '') f4c3.focus()"/>
+                <input id="f4c0" class="input-wordle" maxlength="1"/>
+                <input id="f4c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f4c1.value == '') f4c0.focus()"/>
+                <input id="f4c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f4c2.value == '') f4c1.focus()"/>
+                <input id="f4c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f4c3.value == '') f4c2.focus()"/>
+                <input id="f4c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f4c4.value == '') f4c3.focus()"/>
             </fieldset>
             <fieldset id="fila5" class="fieldset-wordle" disabled>
-                <input id="f5c0" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)"/>
-                <input id="f5c1" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f5c1.value == '') f5c0.focus()"/>
-                <input id="f5c2" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f5c2.value == '') f5c1.focus()"/>
-                <input id="f5c3" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeyup="return tabular(this, this.maxLength)" onkeydown="if (event.key === `Backspace` && f5c3.value == '') f5c2.focus()"/>
-                <input id="f5c4" class="input-wordle" type="text" maxlength="1" autocomplete="off" onkeydown="if (event.key === `Backspace` && f5c4.value == '') f5c3.focus()"/>
+                <input id="f5c0" class="input-wordle" maxlength="1"/>
+                <input id="f5c1" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f5c1.value == '') f5c0.focus()"/>
+                <input id="f5c2" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f5c2.value == '') f5c1.focus()"/>
+                <input id="f5c3" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f5c3.value == '') f5c2.focus()"/>
+                <input id="f5c4" class="input-wordle" maxlength="1" onkeydown="if (event.key === `Backspace` && f5c4.value == '') f5c3.focus()"/>
             </fieldset>
         </form>
     </main>
     <footer>
         <a href="https://github.com/Adrincovich" target="_blank">Copyright © 2022 ADRIÁN DRINCOVICH</a>
-        <a href="./html/contacto.html">Contacto</a>
+        <a href="./HTML/contacto.html">Contacto</a>
     </footer>
 </body>
 </html>
