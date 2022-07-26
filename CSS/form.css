@@ -1,6 +1,7 @@
 #formulario-contacto {
     display: flex;
     flex-wrap: nowrap;
+    width: 90%;
     max-width: 400px;
     flex-direction: column;
     color: white;
