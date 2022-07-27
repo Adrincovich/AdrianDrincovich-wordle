@@ -56,14 +56,14 @@ function saveProgress(){
     //Declaro un array "save" y le guardo los datos necesarios para poder continuar jugando en otro momento
     let save = {};
 
-    save.fecha = new Date().toLocaleString('es-AR', {timeZone:'America/Argentina/Buenos_Aires'});
-    save.tiempo = document.querySelector('#time').innerHTML;
+    save.fecha = new Date().toLocaleString("es-AR", {timeZone:"America/Argentina/Buenos_Aires"});
+    save.tiempo = document.querySelector("#time").innerHTML;
     save.respuestas = respuestas;
     save.usuario = document.getElementById("nombre-jugador-input").value;
     save.palabraGanadora = palabraGanadora;
 
     //Traigo del localStorage el array "saves", si no esta le asigno "[]"
-    let savesArray = JSON.parse(localStorage.getItem('saves')) || [];
+    let savesArray = JSON.parse(localStorage.getItem("saves")) || [];
     savesArray.push(save);
     //Convierto mi array de saves a json
     let savesArrayJSON = JSON.stringify(savesArray);
@@ -72,6 +72,83 @@ function saveProgress(){
 
     // console.log(savesArray)
     window.location.href = "../index.html";
+}
+
+//Funcion para asignar score, se ejecuta cuando el jugador gana
+function scorePartidaGanada(fila){
+
+    let puntajeTimer = document.querySelector('#time').innerHTML; //Traigo la fecha capturada para multiplicar por puntaje
+    let puntuacionTimer = puntajeTimer.replace(":", ""); //Elimino simbolo :
+    let puntuacionTimerNumber = Number(puntuacionTimer) //Paso string a number
+
+    let puntaje = {};
+
+    puntaje.fecha = new Date().toLocaleString("es-AR", { timeZone:"America/Argentina/Buenos_Aires"});
+    puntaje.nombre = document.getElementById("nombre-jugador-input").value;
+
+    //calcular puntaje
+    switch (fila) {
+
+        case 0:
+            calculoPuntaje0 = 2 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje0) //Redondeamos puntaje
+            break;
+
+        case 1:
+            calculoPuntaje1 = 1.5 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje1)
+            break;
+
+        case 2:
+            calculoPuntaje2 = 1.2 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje2)
+            break;
+
+        case 3:
+            calculoPuntaje3 = 1 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje3)
+            break;
+
+        case 4:
+            calculoPuntaje4 = 0.8 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje4)
+            break;
+
+        case 5:
+            calculoPuntaje5 = 0.5 * puntuacionTimerNumber
+            puntaje.puntaje = Math.round(calculoPuntaje5)
+            break;
+
+        default:
+            break;
+    }
+
+    //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
+    let puntajesArray = JSON.parse(localStorage.getItem('puntajes')) || [];
+    puntajesArray.push(puntaje);
+    //Convierto mi array de puntajes a json
+    let puntajeArrayJSON = JSON.stringify(puntajesArray);
+    //Guardo mi array de puntajes en formato JSON en el local storage
+    localStorage.setItem("puntajes", puntajeArrayJSON)
+
+}
+
+//Funcion para obtener puntajes, la ejecuto en "Ranking"
+function obtenerPuntajes() {
+
+    //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
+    let puntajesArray = JSON.parse(localStorage.getItem('puntajes')) || [];
+
+    //Muestro la lista de puntajes ordenado por fecha de mas nueva a mas antigua
+    let body = '';
+    for (var i = 0; i < puntajesArray.length; i++) {
+            body += `<tr role="row">
+                        <td data-label="NOMBRE">${(puntajesArray[puntajesArray.length-1-i].nombre)}</td>
+                        <td data-label="FECHA">${(puntajesArray[puntajesArray.length-1-i].fecha)}</td>
+                        <td data-label="PUNTAJE">${(puntajesArray[puntajesArray.length-1-i].puntaje)}</td>
+                    </tr>`
+        }
+    document.getElementById('puntajes').innerHTML = body;
 }
 
 var regex = new RegExp ("[A-Z]");
@@ -150,6 +227,7 @@ function inicio () {
                         showBtn();
                         document.getElementById("mensaje-resultado").style.color = "rgb(21, 211, 21)";
                         document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
+                        scorePartidaGanada(indice); // Guardamos los datos de la partida con el score
                         bloqueoFieldsetGanarOPerder();
                     }
 
@@ -215,11 +293,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['MATES', 'PASTO', 'TOSER', 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
+const palabrasDisponibles = ['MATES', 'PASTO', 'TOSER'/*, 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
                              'AGUJA', 'AUDIO', 'CUEVA', 'DOMAR', 'GRAVE', 'FUMAR', 'FRITO', 'FURIA', 'GANAR', 'GASTO',
                              'PERRO', 'PISTA', 'ARROZ', 'ARENA', 'MIRAR', 'SALTO', 'CORTE', 'MAREO', 'MULTA', 'MICRO',
                              'RISAS', 'NUBES', 'NOTAR', 'PLOMO', 'PULPA', 'PESAR', 'PARAR', 'PORRA', 'TECHO', 'TITAN',
-                             'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO']
+'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO'*/]
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -228,6 +306,17 @@ function elegirPalabraAlAzar(palabrasDisponibles) {
 var palabraGanadora = elegirPalabraAlAzar(palabrasDisponibles);
 
 var arrayPalabraGanadora = palabraGanadora.split("");
+
+
+
+function showBtn() {
+    document.getElementById("volver-a-jugar-partida").style.display="inline-block";
+    document.getElementById("guardar-partida").style.display="none";
+    document.getElementById("mensaje-resultado").style.display="inline-block";
+    document.getElementById("time").style.display="none";
+    document.getElementById("timer").style.display="none";
+}
+
 
 // salto de input
 
@@ -248,14 +337,6 @@ function tabular(e) {
     }
 }
 
-function showBtn() {
-    document.getElementById("volver-a-jugar-partida").style.display="inline-block";
-    document.getElementById("guardar-partida").style.display="none";
-    document.getElementById("mensaje-resultado").style.display="inline-block";
-    document.getElementById("time").style.display="none";
-    document.getElementById("timer").style.display="none";
-}
-
 window.onload = function(){
 
     let inputsForm = document.getElementById("form-wordle").querySelectorAll("input");
@@ -269,6 +350,7 @@ window.onload = function(){
     const nuevaPartida = document.getElementById("nueva-partida");
     const volverAJugar = document.getElementById("volver-a-jugar-partida");
     const gurdarPartida = document.getElementById("guardar-partida");
+    const rankingPartida = document.getElementById("ranking-partida");
 
     const form = document.getElementById("formulario-usuario");
     const name = document.getElementById("nombre-jugador-input");
@@ -293,10 +375,6 @@ window.onload = function(){
             document.getElementById("fila0").disabled=false;
             document.getElementById("f0c0").focus();
             mensajeDeErrorValor();
-
-            //localStorage.setItem('nombre', name.value);
-
-            // obtenerSaves(name.value);
         }
     })
 
@@ -314,6 +392,11 @@ window.onload = function(){
 
     gurdarPartida.addEventListener("click", function(){
         saveProgress();
+    })
+
+    rankingPartida.addEventListener("click", function(){
+        obtenerPuntajes();
+        mostrarModal();
     })
 
     // Nueva partida, esconder botones
@@ -363,8 +446,26 @@ window.onload = function(){
             }
         }, 1000);
     }
+
+
+    function mostrarModal() {
+        // Ejecuto modal -----------------------------------------------------------
+        let modal = document.getElementById("modalPartidas");
+        let span = document.getElementById("close");
+
+        // Lo hago visible
+        modal.style.display = "block";
+
+        // Si clickea el "botón" de aceptar escondo el modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // Si clickea fuera del modal, lo escondo
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
 }
-
-
-
-//<a href="javascript:popUp('ejemplo44.html')" class="btn btn-info" role="button">Ver ejemplo</a>
