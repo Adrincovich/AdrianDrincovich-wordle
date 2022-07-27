@@ -77,7 +77,7 @@ function saveProgress(){
 //Funcion para asignar score, se ejecuta cuando el jugador gana
 function scorePartidaGanada(fila){
 
-    let puntajeTimer = document.querySelector('#time').innerHTML; //Traigo la fecha capturada para multiplicar por puntaje
+    let puntajeTimer = document.querySelector("#time").innerHTML; //Traigo la fecha capturada para multiplicar por puntaje
     let puntuacionTimer = puntajeTimer.replace(":", ""); //Elimino simbolo :
     let puntuacionTimerNumber = Number(puntuacionTimer) //Paso string a number
 
@@ -124,7 +124,7 @@ function scorePartidaGanada(fila){
     }
 
     //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
-    let puntajesArray = JSON.parse(localStorage.getItem('puntajes')) || [];
+    let puntajesArray = JSON.parse(localStorage.getItem("puntajes")) || [];
     puntajesArray.push(puntaje);
     //Convierto mi array de puntajes a json
     let puntajeArrayJSON = JSON.stringify(puntajesArray);
@@ -133,13 +133,42 @@ function scorePartidaGanada(fila){
 
 }
 
-//Funcion para obtener puntajes, la ejecuto en "Ranking"
-function obtenerPuntajes() {
+
+function obtenerPuntajes() { //Funcion para obtener puntajes. Ordena por fecha. la ejecuto en "Ranking"
+
+    //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
+    let puntajesArray = JSON.parse(localStorage.getItem("puntajes")) || [];
+
+    //Muestro la lista de puntajes ordenado por fecha de mas nueva a mas antigua
+    let body = "";
+    for (var i = 0; i < puntajesArray.length; i++) {
+            body += `<tr role="row">
+                        <td data-label="NOMBRE">${(puntajesArray[puntajesArray.length-1-i].nombre)}</td>
+                        <td data-label="FECHA">${(puntajesArray[puntajesArray.length-1-i].fecha)}</td>
+                        <td data-label="PUNTAJE">${(puntajesArray[puntajesArray.length-1-i].puntaje)}</td>
+                    </tr>`
+        }
+    document.getElementById("puntajes").innerHTML = body;
+}
+
+function ordenalTablaPuntaje() { //Funcion para ordenar puntajes
 
     //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
     let puntajesArray = JSON.parse(localStorage.getItem('puntajes')) || [];
 
-    //Muestro la lista de puntajes ordenado por fecha de mas nueva a mas antigua
+    //ordeno el array de puntajes por puntaje de mayor a menor
+    puntajesArray.sort(function (a, b){
+        if (a.puntaje > b.puntaje) {
+            return 1;
+          }
+          if (a.puntaje < b.puntaje) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+    });
+
+    //Muestro la lista de puntajes ordenado por puntaje del mas alto al mas bajo
     let body = '';
     for (var i = 0; i < puntajesArray.length; i++) {
             body += `<tr role="row">
@@ -220,7 +249,7 @@ function inicio () {
                     eliminarMensajeDeError();
 
                     let respuestaUsuario = respuestas[indice];
-                    let respuestaUsuarioString = respuestaUsuario.join('');
+                    let respuestaUsuarioString = respuestaUsuario.join("");
 
                     if (respuestaUsuarioString == palabraGanadora){
                         estadoGanador = true;
@@ -293,11 +322,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ['MATES', 'PASTO', 'TOSER'/*, 'PISAR', 'MARCO', 'DARDO', 'FREIR', 'TRUCO', 'POSTE', 'CENAR',
-                             'AGUJA', 'AUDIO', 'CUEVA', 'DOMAR', 'GRAVE', 'FUMAR', 'FRITO', 'FURIA', 'GANAR', 'GASTO',
-                             'PERRO', 'PISTA', 'ARROZ', 'ARENA', 'MIRAR', 'SALTO', 'CORTE', 'MAREO', 'MULTA', 'MICRO',
-                             'RISAS', 'NUBES', 'NOTAR', 'PLOMO', 'PULPA', 'PESAR', 'PARAR', 'PORRA', 'TECHO', 'TITAN',
-'BRISA', 'ACERO', 'BIRRA', 'BARRA', 'MARZO', 'ABRIL', 'JUNIO', 'JULIO', 'ENERO', 'ASADO'*/]
+const palabrasDisponibles = ["MATES", "PASTO", "TOSER"/*, "PISAR", "MARCO", "DARDO", "FREIR", "TRUCO", "POSTE", "CENAR",
+                             "AGUJA", "AUDIO", "CUEVA", "DOMAR", "GRAVE", "FUMAR", "FRITO", "FURIA", "GANAR", "GASTO",
+                             "PERRO", "PISTA", "ARROZ", "ARENA", "MIRAR", "SALTO", "CORTE", "MAREO", "MULTA", "MICRO",
+                             "RISAS", "NUBES", "NOTAR", "PLOMO", "PULPA", "PESAR", "PARAR", "PORRA", "TECHO", "TITAN",
+"BRISA", "ACERO", "BIRRA", "BARRA", "MARZO", "ABRIL", "JUNIO", "JULIO", "ENERO", "ASADO"*/]
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
@@ -355,6 +384,9 @@ window.onload = function(){
     const form = document.getElementById("formulario-usuario");
     const name = document.getElementById("nombre-jugador-input");
 
+    const ordenFecha = document.getElementById("orden-por-fecha");
+    const ordenPuntaje = document.getElementById("orden-por-puntaje");
+
     form.addEventListener("submit", function(e){
         e.preventDefault();
 
@@ -363,7 +395,7 @@ window.onload = function(){
         let regexValue = regexName.test(nameValue);
 
         if (name.value.length < 3 || regexValue == false || name.value == "") {
-            errorNombre.innerHTML = 'Ingrese un nombre mayor a 2 digitos. Solo letras sin espacios.'
+            errorNombre.innerHTML = "Ingrese un nombre mayor a 2 digitos. Solo letras sin espacios."
             return false; //se utiliza para abortar la funcion
         } else {
          document.getElementById("nombre-jugador").style.display="none";
@@ -389,7 +421,6 @@ window.onload = function(){
         location.reload();
     })
 
-
     gurdarPartida.addEventListener("click", function(){
         saveProgress();
     })
@@ -397,6 +428,14 @@ window.onload = function(){
     rankingPartida.addEventListener("click", function(){
         obtenerPuntajes();
         mostrarModal();
+    })
+
+    ordenFecha.addEventListener("click", function(){
+        obtenerPuntajes()
+    })
+
+    ordenPuntaje.addEventListener("click", function(){
+        ordenalTablaPuntaje()
     })
 
     // Nueva partida, esconder botones
@@ -410,7 +449,7 @@ window.onload = function(){
 
     function timer() {
         var fiveMinutes = 60 * 5,
-        display = document.querySelector('#time');
+        display = document.querySelector("#time");
         startTimer(fiveMinutes, display);
     }
 
