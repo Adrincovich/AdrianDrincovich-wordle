@@ -1,4 +1,3 @@
-
 //matriz colores del tablero
 
 var colorTablero = [
@@ -50,7 +49,6 @@ var respuestas = [
     [],
 ]
 
-
 function saveProgress(){
 
     //Declaro un array "save" y le guardo los datos necesarios para poder continuar jugando en otro momento
@@ -65,14 +63,66 @@ function saveProgress(){
     //Traigo del localStorage el array "saves", si no esta le asigno "[]"
     let savesArray = JSON.parse(localStorage.getItem("saves")) || [];
     savesArray.push(save);
+
     //Convierto mi array de saves a json
     let savesArrayJSON = JSON.stringify(savesArray);
+
     //Guardo mi array de saves en formato JSON en el local storage
     localStorage.setItem("saves", savesArrayJSON);
 
     // console.log(savesArray)
     window.location.href = "../index.html";
 }
+
+function obtenerSaves() {
+
+    //Traigo del localStorage el array "saves", si no esta le asigno "[]"
+    let savesArray = JSON.parse(localStorage.getItem('saves')) || [];
+
+    //Muestro la lista de saves para el nombre ingresado
+    let body = "";
+   // let c = 0
+    for (var i = 0; i < savesArray.length; i++) {
+     //   c++;
+        body += `<tr role="row">
+                    <td data-label="NOMBRE">${(savesArray[savesArray.length-1-i].usuario)}</td>
+                    <td data-label="FECHA">${(savesArray[savesArray.length-1-i].fecha)}</td>
+                </tr>`
+        //body += `<button onclick="clickSave('${i}');">Partida: ${c}<br><br>${savesArray[i].fecha}</button>`;
+        var encontro = true;
+        }
+
+        document.getElementById("puntajes").innerHTML = body;
+    }
+
+    // if(encontro){
+    //     document.getElementById('data').innerHTML = body;
+    //     //Muesto titulo
+    //     let titulo_save = document.getElementById('titulo_save');
+    //     titulo_save.style.display = 'flex';
+
+    //     //Escondo card
+    //     let card = document.getElementById('formulario');
+    //     card.style.display = 'none';
+    // }else{
+    //     redirigir()
+    // }
+
+
+//Elegir partida guardada para continuar jugando
+function clickSave(save) {
+
+    let saveActual = new URLSearchParams();
+
+    saveActual.append("save", save);
+
+    // window.location.href = "/html/wordle.html?" + saveActual.toString();
+
+    // //para github
+    window.location.href = "/Wordle_Scarabino/html/wordle.html?" + saveActual.toString();
+
+}
+
 
 //Funcion para asignar score, se ejecuta cuando el jugador gana
 function scorePartidaGanada(fila){
@@ -126,8 +176,10 @@ function scorePartidaGanada(fila){
     //Traigo del localStorage el array "puntajes", si no esta le asigno "[]"
     let puntajesArray = JSON.parse(localStorage.getItem("puntajes")) || [];
     puntajesArray.push(puntaje);
+
     //Convierto mi array de puntajes a json
     let puntajeArrayJSON = JSON.stringify(puntajesArray);
+
     //Guardo mi array de puntajes en formato JSON en el local storage
     localStorage.setItem("puntajes", puntajeArrayJSON)
 
@@ -161,11 +213,11 @@ function ordenalTablaPuntaje() { //Funcion para ordenar puntajes
         if (a.puntaje > b.puntaje) {
             return 1;
           }
-          if (a.puntaje < b.puntaje) {
+        if (a.puntaje < b.puntaje) {
             return -1;
-          }
-          // a must be equal to b
-          return 0;
+        }
+        // a must be equal to b
+        return 0;
     });
 
     //Muestro la lista de puntajes ordenado por puntaje del mas alto al mas bajo
@@ -180,7 +232,6 @@ function ordenalTablaPuntaje() { //Funcion para ordenar puntajes
     document.getElementById('puntajes').innerHTML = body;
 }
 
-var regex = new RegExp ("[A-Z]");
 
 var estadoGanador = false;
 var estadoPerdedor = false;
@@ -216,12 +267,14 @@ function eliminarMensajeDeError() {
     errorCampoValor.style.visibility = "hidden";
 }
 
+
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
         fieldset.onkeydown = function (event){
             if(event.key === `Enter`){
                 let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
+                var regex = new RegExp ("[A-Z]");
                 let valor0 = validarCaracter[0].value;
                 let valor1 = validarCaracter[1].value;
                 let valor2 = validarCaracter[2].value;
@@ -380,6 +433,7 @@ window.onload = function(){
     const volverAJugar = document.getElementById("volver-a-jugar-partida");
     const gurdarPartida = document.getElementById("guardar-partida");
     const rankingPartida = document.getElementById("ranking-partida");
+    const cargarPartida = document.getElementById("cargar-partida");
 
     const form = document.getElementById("formulario-usuario");
     const name = document.getElementById("nombre-jugador-input");
@@ -428,14 +482,19 @@ window.onload = function(){
     rankingPartida.addEventListener("click", function(){
         obtenerPuntajes();
         mostrarModal();
+
+        ordenFecha.addEventListener("click", function(){
+            obtenerPuntajes()
+        })
+
+        ordenPuntaje.addEventListener("click", function(){
+            ordenalTablaPuntaje()
+        })
     })
 
-    ordenFecha.addEventListener("click", function(){
-        obtenerPuntajes()
-    })
-
-    ordenPuntaje.addEventListener("click", function(){
-        ordenalTablaPuntaje()
+    cargarPartida.addEventListener("click", function(){
+        obtenerSaves();
+        mostrarModal();
     })
 
     // Nueva partida, esconder botones
