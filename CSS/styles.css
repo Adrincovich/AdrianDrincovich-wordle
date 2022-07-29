@@ -236,6 +236,8 @@ footer a {
 th, td {
     padding: 5px;
     color:white;
+    border-bottom: 2px solid #3a3a3c;
+
 }
 
 #orden-por-fecha {
@@ -243,6 +245,11 @@ th, td {
 }
 
 #orden-por-puntaje {
+    cursor: pointer;
+}
+
+.data-partida-guardadas:hover{
+    background-color: grey;
     cursor: pointer;
 }
 
