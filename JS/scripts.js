@@ -85,7 +85,7 @@ function obtenerSaves() {
     let partida = savesArray.length + 1;
     for (var i = 0; i < savesArray.length; i++) {
         partida--;
-        body += `<tr class="fila-partidas-guardadas" onclick=declararVaribles('${i}') role="row">
+        body += `<tr class="fila-partidas-guardadas" onclick=declararVariables('${i}') role="row">
                     <td class="data-partida-guardadas" data-label="PARTIDA">${partida}</td>
                     <td class="data-partida-guardadas" data-label="NOMBRE">${(savesArray[savesArray.length-1-i].usuario)}</td>
                     <td class="data-partida-guardadas" data-label="FECHA">${(savesArray[savesArray.length-1-i].fecha)}</td>
@@ -95,47 +95,34 @@ function obtenerSaves() {
     document.getElementById("puntajes").innerHTML = body;
 }
 
-const declararVaribles = function(){
+const declararVariables = function(indice){
+    document.getElementById("fila0").disabled=false;
+    document.getElementById("fila1").disabled=false;
+    document.getElementById("fila2").disabled=false;
+    document.getElementById("fila3").disabled=false;
+    document.getElementById("fila4").disabled=false;
+    document.getElementById("fila5").disabled=false;
 
 
     // Traigo del localStorage el array "saves"
-        let savesArray = JSON.parse(localStorage.getItem('saves'));
+    let savesArray = JSON.parse(localStorage.getItem('saves'));
+    let actualArray = savesArray[indice].respuestas;
 
 
-        // fecha = savesArray.fecha
-        // tiempo = savesArray.tiempo
-        // respuestas = savesArray.respuestas
-        // usuario = savesArray.usuario
-        // palabraGanadora = savesArray.palabraGanadora
-
-        let modal = document.getElementById("modalPartidas");
-        modal.style.display = "none";
-        estadoGanador = false;
-        inicio();
-        timer();
-        pintarTablero();
-        hideBtn();
-        document.getElementById("fila0").disabled=false;
-        document.getElementById("f0c0").focus();
-        mensajeDeErrorValor();
-
+    for (let iFila = 0; iFila < 6; iFila++) {
+        for (let iCol=0; iCol<5; iCol++){
+            let input = document.getElementById(`f${iFila}c${iCol}`);
+           if(actualArray[iFila][iCol] !== undefined){
+            input.value = actualArray[iFila][iCol]
+           }else {
+            break
+           }
+        }
+    }
+    arrancaLaPartidaCargada();
+    inicio()
+    pintarTablero();
 }
-
-
-
-// //Elegir partida guardada para continuar jugando
-// function clickSave(save) {
-
-//     let saveActual = new URLSearchParams();
-
-//     saveActual.append("save", save);
-
-//     window.location.href = "/index.html?" + saveActual.toString();
-
-//     // //para github
-//     //window.location.href = "/Wordle_Scarabino/html/wordle.html?" + saveActual.toString();
-
-// }
 
 
 
@@ -280,6 +267,13 @@ function mensajeDeErrorUnaLetra() {
 function eliminarMensajeDeError() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.style.visibility = "hidden";
+}
+
+
+function arrancaLaPartidaCargada() {
+    for (let indice = 0; indice < 6; indice++){
+        guardarRespuesta(indice);
+    }
 }
 
 
