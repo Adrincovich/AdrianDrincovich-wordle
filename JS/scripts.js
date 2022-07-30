@@ -82,20 +82,21 @@ function obtenerSaves() {
 
     //Muestro la lista de saves para el nombre ingresado
     let body = "";
-    let partida = savesArray.length + 1;
-    for (var i = 0; i < savesArray.length; i++) {
+    let partida = savesArray.length+1;
+    for (var i = savesArray.length-1; i >= 0; i--) { //Itrero al revés para indexar correctamente
         partida--;
-        body += `<tr class="fila-partidas-guardadas" onclick=declararVariables('${i}') role="row">
+        body += `<tr class="fila-partidas-guardadas" onclick=loadGame('${i}') role="row">
                     <td class="data-partida-guardadas" data-label="PARTIDA">${partida}</td>
-                    <td class="data-partida-guardadas" data-label="NOMBRE">${(savesArray[savesArray.length-1-i].usuario)}</td>
-                    <td class="data-partida-guardadas" data-label="FECHA">${(savesArray[savesArray.length-1-i].fecha)}</td>
+                    <td class="data-partida-guardadas" data-label="NOMBRE">${(savesArray[i].usuario)}</td>
+                    <td class="data-partida-guardadas" data-label="FECHA">${(savesArray[i].fecha)}</td>
                 </tr>`
     }
 
     document.getElementById("puntajes").innerHTML = body;
 }
 
-const declararVariables = function(indice){
+const loadGame = function(indice){
+
     document.getElementById("fila0").disabled=false;
     document.getElementById("fila1").disabled=false;
     document.getElementById("fila2").disabled=false;
@@ -107,21 +108,41 @@ const declararVariables = function(indice){
     // Traigo del localStorage el array "saves"
     let savesArray = JSON.parse(localStorage.getItem('saves'));
     let actualArray = savesArray[indice].respuestas;
+    let actualPalabra = savesArray[indice].palabraGanadora;
+    let actualTiempo = savesArray[indice].tiempo
+    let actualUsuario = savesArray[indice].usuario;
 
 
     for (let iFila = 0; iFila < 6; iFila++) {
         for (let iCol=0; iCol<5; iCol++){
             let input = document.getElementById(`f${iFila}c${iCol}`);
-           if(actualArray[iFila][iCol] !== undefined){
+            if(actualArray[iFila][iCol] !== undefined){
             input.value = actualArray[iFila][iCol]
-           }else {
-            break
-           }
+            }
         }
     }
-    arrancaLaPartidaCargada();
-    inicio()
-    pintarTablero();
+
+
+    palabraGanadora = actualPalabra;
+    document.querySelector("#time").innerHTML = actualTiempo
+    document.getElementById("nombre-jugador-input").value = actualUsuario
+
+    console.log(actualPalabra)
+    console.log(actualTiempo)
+    console.log(actualUsuario)
+
+    estadoGanador = false;
+    hideBtn();
+    mensajeDeErrorValor();
+    //inicio();
+
+        let actualTiempoTimer = actualTiempo.replace(":", "")
+        let letactualTiempoNumber = Number(actualTiempoTimer)
+       // let sec = letactualTiempoNumber.slice()
+        console.log(letactualTiempoNumber)
+        var timerMinutes = 60 * 5  
+        display = document.querySelector("#time");
+        startTimer(timerMinutes, display)
 }
 
 
@@ -267,13 +288,6 @@ function mensajeDeErrorUnaLetra() {
 function eliminarMensajeDeError() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.style.visibility = "hidden";
-}
-
-
-function arrancaLaPartidaCargada() {
-    for (let indice = 0; indice < 6; indice++){
-        guardarRespuesta(indice);
-    }
 }
 
 
@@ -435,6 +449,7 @@ function tabular(e) {
     }
 }
 
+
 function timer() {
     var fiveMinutes = 60 * 5,
     display = document.querySelector("#time");
@@ -512,7 +527,6 @@ window.onload = function(){
             document.getElementById("nombre-jugador").style.display="none";
             estadoGanador = false;
             inicio();
-            pintarTablero();
             timer();
             hideBtn();
             document.getElementById("fila0").disabled=false;
@@ -555,17 +569,12 @@ window.onload = function(){
         ordenPuntaje.style.display="none"
         numeroPartida.style.display="table-cell"
         obtenerSaves();
-        //declararVaribles();
         mostrarModal();
 
         ordenFecha.addEventListener("click", function(){
             obtenerSaves();
         })
     })
-
-
-
-
 
     function mostrarModal() {
         // Ejecuto modal -----------------------------------------------------------
