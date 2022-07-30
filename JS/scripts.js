@@ -83,7 +83,7 @@ function obtenerSaves() {
     //Muestro la lista de saves para el nombre ingresado
     let body = "";
     let partida = savesArray.length+1;
-    for (var i = savesArray.length-1; i >= 0; i--) { //Itrero al revés para indexar correctamente
+    for (var i = savesArray.length-1; i >= 0; i--) { //Itero al revés para indexar correctamente
         partida--;
         body += `<tr class="fila-partidas-guardadas" onclick=loadGame('${i}') role="row">
                     <td class="data-partida-guardadas" data-label="PARTIDA">${partida}</td>
@@ -136,13 +136,15 @@ const loadGame = function(indice){
     mensajeDeErrorValor();
     //inicio();
 
-        let actualTiempoTimer = actualTiempo.replace(":", "")
-        let letactualTiempoNumber = Number(actualTiempoTimer)
-       // let sec = letactualTiempoNumber.slice()
-        console.log(letactualTiempoNumber)
-        var timerMinutes = 60 * 5  
+        //Realcular tiempo
+        let sec = actualTiempo.slice(3);
+        let min = actualTiempo.slice(0, 2);
+        let secTransform = Math.round((sec/60) * 100);
+        let calculoTiempo = Math.round(((min + secTransform) /100) * 60);
+        console.log(calculoTiempo);
+        var timer = calculoTiempo;
         display = document.querySelector("#time");
-        startTimer(timerMinutes, display)
+        startTimer(timer, display);
 }
 
 
