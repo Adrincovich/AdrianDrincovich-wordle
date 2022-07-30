@@ -59,6 +59,7 @@ function saveProgress(){
     save.respuestas = respuestas;
     save.usuario = document.getElementById("nombre-jugador-input").value;
     save.palabraGanadora = palabraGanadora;
+    save.colorTablero = colorTablero;
 
     //Traigo del localStorage el array "saves", si no esta le asigno "[]"
     let savesArray = JSON.parse(localStorage.getItem("saves")) || [];
@@ -95,7 +96,9 @@ function obtenerSaves() {
     document.getElementById("puntajes").innerHTML = body;
 }
 
+
 const loadGame = function(indice){
+    gameOver = false;
 
     document.getElementById("fila0").disabled=false;
     document.getElementById("fila1").disabled=false;
@@ -107,12 +110,23 @@ const loadGame = function(indice){
 
     // Traigo del localStorage el array "saves"
     let savesArray = JSON.parse(localStorage.getItem('saves'));
+
     let actualArray = savesArray[indice].respuestas;
     let actualPalabra = savesArray[indice].palabraGanadora;
     let actualTiempo = savesArray[indice].tiempo
     let actualUsuario = savesArray[indice].usuario;
+    let actualColorTablero = savesArray[indice].colorTablero
+
+    colorTablero = actualColorTablero;
+
+    pintarTablero();
+
+    palabraGanadora = actualPalabra;
+    document.querySelector("#time").innerHTML = actualTiempo
+    document.getElementById("nombre-jugador-input").value = actualUsuario
 
 
+    //Escribo en valores obtenidos en input
     for (let iFila = 0; iFila < 6; iFila++) {
         for (let iCol=0; iCol<5; iCol++){
             let input = document.getElementById(`f${iFila}c${iCol}`);
@@ -122,29 +136,106 @@ const loadGame = function(indice){
         }
     }
 
-
-    palabraGanadora = actualPalabra;
-    document.querySelector("#time").innerHTML = actualTiempo
-    document.getElementById("nombre-jugador-input").value = actualUsuario
-
     console.log(actualPalabra)
     console.log(actualTiempo)
     console.log(actualUsuario)
+    console.log(colorTablero)
 
-    estadoGanador = false;
+   // guardarRespuesta(indice);
     hideBtn();
-    mensajeDeErrorValor();
-    //inicio();
+    mensajeCargarPartida();
 
-        //Realcular tiempo
-        let sec = actualTiempo.slice(3);
-        let min = actualTiempo.slice(0, 2);
-        let secTransform = Math.round((sec/60) * 100);
-        let calculoTiempo = Math.round(((min + secTransform) /100) * 60);
-        console.log(calculoTiempo);
-        var timer = calculoTiempo;
-        display = document.querySelector("#time");
-        startTimer(timer, display);
+    //Realcular tiempo
+    let sec = actualTiempo.slice(3);
+    let min = actualTiempo.slice(0, 2);
+    let secTransform = Math.round((sec/60) * 100);
+    let calculoTiempo = Math.round(((min + secTransform) /100) * 60);
+    var timer = calculoTiempo;
+    display = document.querySelector("#time");
+    startTimer(timer, display);
+
+    
+
+    function guardarRespuestaPartidaCargada(indice){
+        for (let iCol = 0; iCol < 5; iCol++){
+            let input = document.getElementById(`f${indice}c${iCol}`).value;
+            respuestas[indice].push(input);
+        }
+        revisarResultadoPartidaCargada(respuestas[indice], indice);
+    }
+
+    function revisarResultadoPartidaCargada(respuesta, indice){
+        respuesta.forEach(function(elemento, index){
+            if(elemento === arrayActualPalabra[index]){
+                colorTablero[indice][index] = colores.VERDE;
+            }
+            else if(arrayActualPalabra.includes(elemento)){
+                colorTablero[indice][index] = colores.AMARILLO;
+            }
+            else if(!arrayActualPalabra.includes(elemento)){
+                colorTablero[indice][index] = colores.GRIS;
+            }
+        })
+        pintarTablero();
+    }
+
+    arrayActualPalabra = actualPalabra.split("")
+
+
+    for (let indice = 0; indice < 6; indice++){
+        let fieldset = document.getElementById(`fila${indice}`);
+        fieldset.onkeydown = function (event){
+            if(event.key === `Enter`){
+
+                guardarRespuestaPartidaCargada(indice);
+                eliminarMensajeDeError();
+
+                let respuestaUsuario = respuestas[indice];
+                let respuestaUsuarioString = respuestaUsuario.join("");
+
+                if (respuestaUsuarioString == palabraGanadora){
+                    gameOver = true;
+                    showBtn();
+                    document.getElementById("mensaje-resultado").style.color = "rgb(21, 211, 21)";
+                    document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
+                    scorePartidaGanada(indice); // Guardamos los datos de la partida con el score
+                    bloqueoFieldsetGanarOPerder();
+                }
+
+                if (indice == 0 && respuestaUsuarioString != palabraGanadora){
+                    document.getElementById("fila1").disabled=false;
+                    document.getElementById("fila0").disabled=true;
+                    document.getElementById("f1c0").focus();
+                }
+                if (indice == 1 && respuestaUsuarioString != palabraGanadora){
+                    document.getElementById("fila2").disabled=false;
+                    document.getElementById("fila1").disabled=true;
+                    document.getElementById("f2c0").focus();
+                }
+                if (indice == 2 && respuestaUsuarioString != palabraGanadora){
+                    document.getElementById("fila3").disabled=false;
+                    document.getElementById("fila2").disabled=true;
+                    document.getElementById("f3c0").focus();
+                }
+                if (indice == 3 && respuestaUsuarioString != palabraGanadora){
+                    document.getElementById("fila4").disabled=false;
+                    document.getElementById("fila3").disabled=true;
+                    document.getElementById("f4c0").focus();
+                }
+                if (indice == 4 && respuestaUsuarioString != palabraGanadora){
+                    document.getElementById("fila5").disabled=false;
+                    document.getElementById("fila4").disabled=true;
+                    document.getElementById("f5c0").focus();
+                }
+                if (indice == 5  && respuestaUsuarioString != palabraGanadora){
+                    gameOver = true;
+                    showBtn();
+                    document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
+                    bloqueoFieldsetGanarOPerder();
+                }
+            }
+        }
+    }
 }
 
 
@@ -258,13 +349,12 @@ function ordenalTablaPuntaje() { //Funcion para ordenar puntajes
 }
 
 
-var estadoGanador = false;
-var estadoPerdedor = false;
+var gameOver = false;
 
 function bloqueoFieldsetGanarOPerder() {
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
-        if (estadoGanador || estadoPerdedor);
+        if (gameOver);
         fieldset.disabled=true;
     }
 }
@@ -290,6 +380,13 @@ function mensajeDeErrorUnaLetra() {
 function eliminarMensajeDeError() {
     errorCampoValor = document.getElementById("mensaje-error");
     errorCampoValor.style.visibility = "hidden";
+}
+
+function mensajeCargarPartida() {
+    errorCampoValor = document.getElementById("mensaje-error");
+    errorCampoValor.innerHTML = "APRETAR ENTER EN CADA FILA CARGADA";
+    errorCampoValor.style.color = "red"
+    errorCampoValor.style.visibility = "visible";
 }
 
 
@@ -330,7 +427,7 @@ function inicio () {
                     let respuestaUsuarioString = respuestaUsuario.join("");
 
                     if (respuestaUsuarioString == palabraGanadora){
-                        estadoGanador = true;
+                        gameOver = true;
                         showBtn();
                         document.getElementById("mensaje-resultado").style.color = "rgb(21, 211, 21)";
                         document.getElementById("mensaje-resultado").innerHTML = "--- GANASTE!! --- ";
@@ -364,7 +461,7 @@ function inicio () {
                         document.getElementById("f5c0").focus();
                     }
                     if (indice == 5  && respuestaUsuarioString != palabraGanadora){
-                        estadoPerdedor = true;
+                        gameOver = true;
                         showBtn();
                         document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
                         bloqueoFieldsetGanarOPerder();
@@ -374,6 +471,7 @@ function inicio () {
         }
     }
 }
+
 
 function guardarRespuesta(indice){
     for (let iCol = 0; iCol < 5; iCol++){
@@ -469,7 +567,7 @@ function startTimer(duration, display) {
 
         display.textContent = minutes + ":" + seconds;
 
-        if (estadoGanador || estadoPerdedor){
+        if (gameOver){
             clearInterval(reloj);
         }
 
@@ -482,7 +580,7 @@ function startTimer(duration, display) {
         }
 
         if (--timer < 0) {
-            estadoPerdedor = true;
+            gameOver = true;
             timer = duration;
             showBtn();
             document.getElementById("mensaje-resultado").innerHTML = `Game OVER! Tiempo finalizado. La palabra es: ${palabraGanadora}`;
@@ -527,7 +625,7 @@ window.onload = function(){
             return false; //se utiliza para abortar la funcion
         } else {
             document.getElementById("nombre-jugador").style.display="none";
-            estadoGanador = false;
+            gameOver = false;
             inicio();
             timer();
             hideBtn();
@@ -543,8 +641,7 @@ window.onload = function(){
     })
 
     volverAJugar.addEventListener("click", function(){
-        estadoGanador = false;
-        estadoPerdedor = false;
+        gameOver = false;
         location.reload();
     })
 
@@ -579,7 +676,7 @@ window.onload = function(){
     })
 
     function mostrarModal() {
-        // Ejecuto modal -----------------------------------------------------------
+        // Ejecuto modal --------
         let modal = document.getElementById("modalPartidas");
         let span = document.getElementById("close");
 
