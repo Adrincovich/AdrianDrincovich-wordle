@@ -60,6 +60,4 @@ window.onload = function() {
     text.addEventListener("focus", function(){
         document.getElementById("comentario-error").style.visibility = "hidden";
     })
-
-
 }

@@ -99,6 +99,8 @@ function obtenerSaves() {
 
 const loadGame = function(indice){
     gameOver = false;
+    let modal = document.getElementById("modalPartidas");
+    modal.style.display = "none";
 
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
@@ -135,9 +137,9 @@ const loadGame = function(indice){
         }
     }
 
-    console.log(actualPalabra)
-    console.log(actualTiempo)
-    console.log(actualUsuario)
+    console.log(actualPalabra);
+    console.log(actualTiempo);
+    console.log(actualUsuario);
 
     hideBtn();
     mensajeDeErrorValor();
@@ -176,8 +178,7 @@ const loadGame = function(indice){
         pintarTablero();
     }
 
-    arrayActualPalabra = actualPalabra.split("")
-
+    arrayActualPalabra = actualPalabra.split("");
 
 
     //Guarla la respuesta de la partida solo de las filas  guardadas
@@ -193,8 +194,12 @@ const loadGame = function(indice){
 
         //condicional para que no impacte guardarRespuestaPartidaCargada en espacios vacios
         if (valor0 !== "" && valor1 !== "" && valor2 !== "" && valor3 !== ""&& valor4 !== ""){
-            guardarRespuestaPartidaCargada(indice)
+            guardarRespuestaPartidaCargada(indice);
             fieldset.disabled=true;
+        }
+        if (valor0 == ""){
+            validarCaracter[0].focus();
+            break //se posiciona en la primer fila vacia
         }
     }
 
@@ -216,9 +221,6 @@ const loadGame = function(indice){
                 let input2 = regex.test(valor2);
                 let input3 = regex.test(valor3);
                 let input4 = regex.test(valor4);
-
-                let found = validarCaracter.find(element => element > "")
-                console.log(found)
 
                 if (valor0 == "" || valor1 == "" || valor2 == "" || valor3 == "" || valor4 == ""){
                     mensajeDeErrorEnter();
@@ -288,7 +290,7 @@ function scorePartidaGanada(fila){
 
     let puntajeTimer = document.querySelector("#time").innerHTML; //Traigo la fecha capturada para multiplicar por puntaje
     let puntuacionTimer = puntajeTimer.replace(":", ""); //Elimino simbolo :
-    let puntuacionTimerNumber = Number(puntuacionTimer) //Paso string a number
+    let puntuacionTimerNumber = Number(puntuacionTimer); //Paso string a number
 
     let puntaje = {};
 
@@ -340,7 +342,7 @@ function scorePartidaGanada(fila){
     let puntajeArrayJSON = JSON.stringify(puntajesArray);
 
     //Guardo mi array de puntajes en formato JSON en el local storage
-    localStorage.setItem("puntajes", puntajeArrayJSON)
+    localStorage.setItem("puntajes", puntajeArrayJSON);
 
 }
 
@@ -627,6 +629,7 @@ function startTimer(duration, display) {
 
 
 window.onload = function(){
+    console.log(palabraGanadora)
 
     let inputsForm = document.getElementById("form-wordle").querySelectorAll("input");
 
@@ -701,6 +704,7 @@ window.onload = function(){
     })
 
     cargarPartida.addEventListener("click", function(){
+        document.getElementById("nombre-jugador").style.display="none";
         ordenPuntaje.style.display="none"
         numeroPartida.style.display="table-cell"
         obtenerSaves();
