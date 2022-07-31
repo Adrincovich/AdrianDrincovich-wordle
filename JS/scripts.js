@@ -100,13 +100,10 @@ function obtenerSaves() {
 const loadGame = function(indice){
     gameOver = false;
 
-    document.getElementById("fila0").disabled=false;
-    document.getElementById("fila1").disabled=false;
-    document.getElementById("fila2").disabled=false;
-    document.getElementById("fila3").disabled=false;
-    document.getElementById("fila4").disabled=false;
-    document.getElementById("fila5").disabled=false;
-
+    for (let indice = 0; indice < 6; indice++){
+        let fieldset = document.getElementById(`fila${indice}`);
+        fieldset.disabled=false;
+    }
 
     // Traigo del localStorage el array "saves"
     let savesArray = JSON.parse(localStorage.getItem('saves'));
@@ -115,15 +112,17 @@ const loadGame = function(indice){
     let actualPalabra = savesArray[indice].palabraGanadora;
     let actualTiempo = savesArray[indice].tiempo
     let actualUsuario = savesArray[indice].usuario;
-    let actualColorTablero = savesArray[indice].colorTablero
+    let actualColorTablero = savesArray[indice].colorTablero;
 
     colorTablero = actualColorTablero;
+
+    //guardarRespuestaPartidaCargada(indice)
 
     pintarTablero();
 
     palabraGanadora = actualPalabra;
-    document.querySelector("#time").innerHTML = actualTiempo
-    document.getElementById("nombre-jugador-input").value = actualUsuario
+    document.querySelector("#time").innerHTML = actualTiempo;
+    document.getElementById("nombre-jugador-input").value = actualUsuario;
 
 
     //Escribo en valores obtenidos en input
@@ -131,7 +130,7 @@ const loadGame = function(indice){
         for (let iCol=0; iCol<5; iCol++){
             let input = document.getElementById(`f${iFila}c${iCol}`);
             if(actualArray[iFila][iCol] !== undefined){
-            input.value = actualArray[iFila][iCol]
+            input.value = actualArray[iFila][iCol];
             }
         }
     }
@@ -139,11 +138,9 @@ const loadGame = function(indice){
     console.log(actualPalabra)
     console.log(actualTiempo)
     console.log(actualUsuario)
-    console.log(colorTablero)
 
-   // guardarRespuesta(indice);
     hideBtn();
-    mensajeCargarPartida();
+    mensajeDeErrorValor();
 
     //Realcular tiempo
     let sec = actualTiempo.slice(3);
@@ -154,8 +151,8 @@ const loadGame = function(indice){
     display = document.querySelector("#time");
     startTimer(timer, display);
 
-    
 
+    //misma funcion pero al cargar partidas (con palabra actual)
     function guardarRespuestaPartidaCargada(indice){
         for (let iCol = 0; iCol < 5; iCol++){
             let input = document.getElementById(`f${indice}c${iCol}`).value;
@@ -182,11 +179,57 @@ const loadGame = function(indice){
     arrayActualPalabra = actualPalabra.split("")
 
 
+
+    //Guarla la respuesta de la partida solo de las filas  guardadas
     for (let indice = 0; indice < 6; indice++){
         let fieldset = document.getElementById(`fila${indice}`);
-        fieldset.onkeydown = function (event){
-            if(event.key === `Enter`){
+        let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
 
+        let valor0 = validarCaracter[0].value;
+        let valor1 = validarCaracter[1].value;
+        let valor2 = validarCaracter[2].value;
+        let valor3 = validarCaracter[3].value;
+        let valor4 = validarCaracter[4].value;
+
+        //condicional para que no impacte guardarRespuestaPartidaCargada en espacios vacios
+        if (valor0 !== "" && valor1 !== "" && valor2 !== "" && valor3 !== ""&& valor4 !== ""){
+            guardarRespuestaPartidaCargada(indice)
+            fieldset.disabled=true;
+        }
+    }
+
+    //Funcion inicio() modificada para partida guardada
+    for (let indice = 0; indice < 6; indice++){
+        let fieldset = document.getElementById(`fila${indice}`);
+        fieldset.onkeydown = function (event){//el resto del juego guardarRespuesta con enter
+            if(event.key === `Enter`){
+                let validarCaracter = document.querySelectorAll(`#fila${indice} input`);
+                var regex = new RegExp ("[A-Z]");
+                let valor0 = validarCaracter[0].value;
+                let valor1 = validarCaracter[1].value;
+                let valor2 = validarCaracter[2].value;
+                let valor3 = validarCaracter[3].value;
+                let valor4 = validarCaracter[4].value;
+
+                let input0 = regex.test(valor0);
+                let input1 = regex.test(valor1);
+                let input2 = regex.test(valor2);
+                let input3 = regex.test(valor3);
+                let input4 = regex.test(valor4);
+
+                let found = validarCaracter.find(element => element > "")
+                console.log(found)
+
+                if (valor0 == "" || valor1 == "" || valor2 == "" || valor3 == "" || valor4 == ""){
+                    mensajeDeErrorEnter();
+                }
+                else if (input0 == false || input1 == false || input2 == false || input3 == false || input4 == false){
+                    mensajeDeErrorValor();
+                }
+                else if (valor0.length > 1 || valor1.length  > 1 || valor2.length > 1 || valor3.length > 1 || valor4.length > 1 ){
+                    mensajeDeErrorUnaLetra();
+                }
+                else{
                 guardarRespuestaPartidaCargada(indice);
                 eliminarMensajeDeError();
 
@@ -232,12 +275,12 @@ const loadGame = function(indice){
                     showBtn();
                     document.getElementById("mensaje-resultado").innerHTML = `Game OVER! No quedan mas intentos. La palabra es: "${palabraGanadora}"`;
                     bloqueoFieldsetGanarOPerder();
+                    }
                 }
             }
         }
     }
 }
-
 
 
 //Funcion para asignar score, se ejecuta cuando el jugador gana
@@ -382,13 +425,6 @@ function eliminarMensajeDeError() {
     errorCampoValor.style.visibility = "hidden";
 }
 
-function mensajeCargarPartida() {
-    errorCampoValor = document.getElementById("mensaje-error");
-    errorCampoValor.innerHTML = "APRETAR ENTER EN CADA FILA CARGADA";
-    errorCampoValor.style.color = "red"
-    errorCampoValor.style.visibility = "visible";
-}
-
 
 function inicio () {
     for (let indice = 0; indice < 6; indice++){
@@ -498,11 +534,11 @@ function revisarResultado(respuesta, indice){
 
 // Funcion para generar palabras randon
 
-const palabrasDisponibles = ["MATES", "PASTO", "TOSER"/*, "PISAR", "MARCO", "DARDO", "FREIR", "TRUCO", "POSTE", "CENAR",
+const palabrasDisponibles = ["MATES", "PASTO", "TOSER", "PISAR", "MARCO", "DARDO", "FREIR", "TRUCO", "POSTE", "CENAR",
                              "AGUJA", "AUDIO", "CUEVA", "DOMAR", "GRAVE", "FUMAR", "FRITO", "FURIA", "GANAR", "GASTO",
                              "PERRO", "PISTA", "ARROZ", "ARENA", "MIRAR", "SALTO", "CORTE", "MAREO", "MULTA", "MICRO",
                              "RISAS", "NUBES", "NOTAR", "PLOMO", "PULPA", "PESAR", "PARAR", "PORRA", "TECHO", "TITAN",
-"BRISA", "ACERO", "BIRRA", "BARRA", "MARZO", "ABRIL", "JUNIO", "JULIO", "ENERO", "ASADO"*/]
+                             "BRISA", "ACERO", "BIRRA", "BARRA", "MARZO", "ABRIL", "JUNIO", "JULIO", "ENERO", "ASADO"]
 
 function elegirPalabraAlAzar(palabrasDisponibles) {
     return palabrasDisponibles[Math.floor(Math.random() * palabrasDisponibles.length)]
