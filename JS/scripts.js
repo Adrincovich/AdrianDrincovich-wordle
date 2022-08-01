@@ -72,7 +72,7 @@ function saveProgress(){
     localStorage.setItem("saves", savesArrayJSON);
 
     // console.log(savesArray)
-    window.location.href = "../index.html";
+    location.reload();
 }
 
 
